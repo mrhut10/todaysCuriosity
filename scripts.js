@@ -4,20 +4,26 @@ function loadImage() {
   base_image.src = 'george.jpg';
   base_image.onload = function(){
     const inputCtx = getCanvasCtxFromSelector('.input-canvas');
+    const outputCtx = getCanvasCtxFromSelector('.output-canvas');
+    
     paintImageToCanvas(base_image, inputCtx);
     const coolAvatar = makeCoolAvatar(inputCtx);
-    const outputCtx = getCanvasCtxFromSelector('.output-canvas');
     paintCoolAvatarToCanvas(coolAvatar, outputCtx);
   }
 }
 
 function paintCoolAvatarToCanvas(imageData, context) {
-
+  context.canvas.width = imageData.width;
+  context.canvas.height = imageData.height;
+  context.putImageData(imageData, 0, 0);
 }
 
 function makeCoolAvatar(context) {
+  const width = context.canvas.width;
+  const height = context.canvas.height;
+  const coolAvatarData = context.getImageData(0, 0, width, height);
 
-  return 1; // image data of cool avatar
+  return messWithPixels(coolAvatarData); // image data of cool avatar
 }
 
 function paintImageToCanvas(theImage, context){
