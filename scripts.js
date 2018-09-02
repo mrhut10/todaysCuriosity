@@ -1,18 +1,38 @@
-const canvas = document.querySelector('.photo');
-const ctx = canvas.getContext('2d');
 
-function paintToCanvas() {
+function loadImage() {
   base_image = new Image();
   base_image.src = 'george.jpg';
   base_image.onload = function(){
-    ctx.drawImage(base_image, 0, 0);
-    let pixels = ctx.getImageData(0, 0, width, height);
-    ctx.putImageData(messWithPixels(pixels), 0, 0);
+    const inputCtx = getCanvasCtxFromSelector('.input-canvas');
+    paintImageToCanvas(base_image, inputCtx);
+    const coolAvatar = makeCoolAvatar(inputCtx);
+    const outputCtx = getCanvasCtxFromSelector('.output-canvas');
+    paintCoolAvatarToCanvas(coolAvatar, outputCtx);
   }
-  const width = base_image.width;
-  const height = base_image.height;
-  canvas.width = width;
-  canvas.height = height; 
+}
+
+function paintCoolAvatarToCanvas(imageData, context) {
+
+}
+
+function makeCoolAvatar(context) {
+
+  return 1; // image data of cool avatar
+}
+
+function paintImageToCanvas(theImage, context){
+  
+  const width = theImage.width;
+  const height = theImage.height;
+  context.canvas.width = width;
+  context.canvas.height = height;
+  
+  context.drawImage(theImage, 0, 0);
+}
+
+function getCanvasCtxFromSelector(selector) {
+  const inputCanvas = document.querySelector(selector);
+  return inputCanvas.getContext('2d');
 }
 
 function messWithPixels(pixels) {
@@ -21,9 +41,8 @@ function messWithPixels(pixels) {
     pixels.data[i + 1] = pixels.data[i + 1] - 50; // GREEN
     pixels.data[i + 2] = pixels.data[i + 2] + 100; // Blue
   }
-  console.log('iscalled');
+  
   return pixels;
 }
 
-paintToCanvas();
-
+loadImage();
