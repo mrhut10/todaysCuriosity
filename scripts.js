@@ -13,9 +13,36 @@ function loadImage() {
 }
 
 function paintCoolAvatarToCanvas(imageData, context) {
-  context.canvas.width = imageData.width;
-  context.canvas.height = imageData.height;
-  context.putImageData(imageData, 0, 0);
+  const width = imageData.width;
+  const height = imageData.height;
+  const dutyCycle = 60 / 100;
+  const divsX = 12;
+  const divsY = 10;
+  const divWidth = width / divsX;
+  const divHeight = height / divsY;
+  const offset = divWidth * 1 / dutyCycle / 2;
+  const dirtyWidth = divWidth * dutyCycle + 5;
+  const dirtyHeight = divHeight * dutyCycle + 5;
+  console.log(offset);
+  context.canvas.width = width * dutyCycle;
+  context.canvas.height = height * dutyCycle;
+  const logger = [];
+  for (let indexX = 0; indexX+1 < width; indexX += divWidth) {
+    for (let indexY = 0; indexY+1 < height; indexY += divHeight) {
+      const dirtyX = indexX;
+      const dirtyY = indexY;
+      const dx = indexX * dutyCycle;
+      const dy = indexY * dutyCycle ;
+      sanePutImageData(context, imageData, dx, dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight);
+    }
+  }
+  console.table(logger);
+}
+
+function sanePutImageData(context, imageData, dx, dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight) {
+  const sane_dx = dx - dirtyX;
+  const sane_dy = dy - dirtyY;
+  context.putImageData(imageData, sane_dx, sane_dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight);
 }
 
 function makeCoolAvatar(context) {
