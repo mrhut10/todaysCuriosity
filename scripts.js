@@ -6,8 +6,7 @@ function loadImage() {
     const outputCtx = getCanvasCtxFromSelector('.output-canvas');
 
     paintImageToCanvas(base_image, inputCtx);
-    const coolAvatar = makeCoolAvatar(inputCtx);
-    paintCoolAvatarToCanvas(coolAvatar, outputCtx);
+    paintCoolAvatarToCanvas(base_image, outputCtx);
   }
 }
 
@@ -24,8 +23,8 @@ function paintCoolAvatarToCanvas(imageData, context) {
   for (let indexX = 0; indexX+1 < imageData.width; indexX += divWidth) {
     for (let indexY = 0; indexY+1 < imageData.height; indexY += divHeight) {
       const dx = indexX * dutyCycle;
-      const dy = indexY * dutyCycle ;
-      sanePutImageData(context, imageData, dx, dy, indexX, indexY, imageData.width, imageData.height);
+      const dy = indexY * dutyCycle;
+      context.drawImage(imageData, indexX, indexY, divWidth, divHeight, dx, dy, divWidth, divHeight);
     }
   }
 }
@@ -34,13 +33,6 @@ function sanePutImageData(context, imageData, dx, dy, dirtyX, dirtyY, dirtyWidth
   const sane_dx = dx - dirtyX;
   const sane_dy = dy - dirtyY;
   context.putImageData(imageData, sane_dx, sane_dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight);
-}
-
-function makeCoolAvatar(context) {
-  const width = context.canvas.width;
-  const height = context.canvas.height;
-
-  return context.getImageData(0, 0, width, height);
 }
 
 function paintImageToCanvas(theImage, context){
