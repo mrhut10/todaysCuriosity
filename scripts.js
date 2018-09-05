@@ -17,7 +17,8 @@ function paintCoolAvatarToCanvas(imageData, context, orgCtx) {
 
   context.canvas.width = imageData.width * dutyCycle;
   context.canvas.height = imageData.height * dutyCycle;
-  const brightPixels = brightenPixels(orgCtx.getImageData(0, 0, orgCtx.canvas.width, orgCtx.canvas.height));
+  let brightPixels = orgCtx.getImageData(0, 0, orgCtx.canvas.width, orgCtx.canvas.height);
+  brightPixels = brightenPixels(brightPixels);
 
   const divWidth = imageData.width / divsX;
   const divHeight = imageData.height / divsY;
@@ -26,7 +27,7 @@ function paintCoolAvatarToCanvas(imageData, context, orgCtx) {
       const dx = indexX * dutyCycle;
       const dy = indexY * dutyCycle;
       //draw new image block of pixels
-      context.drawImage(imageData, indexX, indexY, divWidth, divHeight, dx, dy, divWidth, divHeight);
+      context.drawImage(imageData, indexX, indexY, divWidth*dutyCycle, divHeight*dutyCycle, dx, dy, divWidth*dutyCycle+2, divHeight*dutyCycle+2);
       //highlight on the original image
       orgCtx.putImageData(brightPixels, 0, 0, indexX, indexY, divWidth*dutyCycle, divHeight*dutyCycle)
     }
@@ -48,15 +49,12 @@ function getCanvasCtxFromSelector(selector) {
   return inputCanvas.getContext('2d');
 }
 
-function brightenPixels(pixels) {
-  // pixels.data is a 8bit but can still use map reduce
-  for (let i = 0; i < pixels.data.length; i+=4) {
-    pixels.data[i + 0] = pixels.data[i + 0] + 25; // RED
-    pixels.data[i + 1] = pixels.data[i + 1] + 25; // GREEN
-    pixels.data[i + 2] = pixels.data[i + 2] + 25; // Blue
-    // pixels.data[i + 3] = pixels.data[i + 3]; // alpha
-  }
-  return pixels;
+function brightenPixels({width, height, data}) {
+  return new ImageData(
+    data.map( (pixel,index) => index % 4 !== 3 ? pixel + 20 : pixel ),
+    width,
+    height
+  );
 }
 
 loadImage();
