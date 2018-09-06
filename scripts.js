@@ -1,29 +1,37 @@
-
 function loadImage() {
   base_image = new Image();
   base_image.src = 'george.jpg';
   base_image.onload = function(){
     const inputCtx = getCanvasCtxFromSelector('.input-canvas');
     const outputCtx = getCanvasCtxFromSelector('.output-canvas');
-    
+
     paintImageToCanvas(base_image, inputCtx);
-    const coolAvatar = makeCoolAvatar(inputCtx);
-    paintCoolAvatarToCanvas(coolAvatar, outputCtx);
+    paintCoolAvatarToCanvas(base_image, outputCtx, inputCtx);
   }
 }
 
-function paintCoolAvatarToCanvas(imageData, context) {
-  context.canvas.width = imageData.width;
-  context.canvas.height = imageData.height;
-  context.putImageData(imageData, 0, 0);
-}
+function paintCoolAvatarToCanvas(imageData, context, orgCtx) {
+  const divsX = 12;
+  const divsY = 10;
+  const dutyCycle = 60 / 100;
 
-function makeCoolAvatar(context) {
-  const width = context.canvas.width;
-  const height = context.canvas.height;
-  const coolAvatarData = context.getImageData(0, 0, width, height);
+  context.canvas.width = imageData.width * dutyCycle;
+  context.canvas.height = imageData.height * dutyCycle;
+  let brightPixels = orgCtx.getImageData(0, 0, orgCtx.canvas.width, orgCtx.canvas.height);
+  brightPixels = brightenPixels(brightPixels);
 
-  return messWithPixels(coolAvatarData); // image data of cool avatar
+  const divWidth = imageData.width / divsX;
+  const divHeight = imageData.height / divsY;
+  for (let indexX = 0; indexX+1 < imageData.width; indexX += divWidth) {
+    for (let indexY = 0; indexY+1 < imageData.height; indexY += divHeight) {
+      const dx = indexX * dutyCycle;
+      const dy = indexY * dutyCycle;
+      //draw new image block of pixels
+      context.drawImage(imageData, indexX, indexY, divWidth*dutyCycle, divHeight*dutyCycle, dx, dy, divWidth*dutyCycle+2, divHeight*dutyCycle+2);
+      //highlight on the original image
+      orgCtx.putImageData(brightPixels, 0, 0, indexX, indexY, divWidth*dutyCycle, divHeight*dutyCycle)
+    }
+  }
 }
 
 function paintImageToCanvas(theImage, context){
@@ -41,14 +49,12 @@ function getCanvasCtxFromSelector(selector) {
   return inputCanvas.getContext('2d');
 }
 
-function messWithPixels(pixels) {
-  for (let i = 0; i < pixels.data.length; i+=4) {
-    pixels.data[i + 0] = pixels.data[i + 0] - 50; // RED
-    pixels.data[i + 1] = pixels.data[i + 1] - 50; // GREEN
-    pixels.data[i + 2] = pixels.data[i + 2] + 100; // Blue
-  }
-  
-  return pixels;
+function brightenPixels({width, height, data}) {
+  return new ImageData(
+    data.map( (pixel,index) => index % 4 !== 3 ? pixel + 20 : pixel ),
+    width,
+    height
+  );
 }
 
 loadImage();
