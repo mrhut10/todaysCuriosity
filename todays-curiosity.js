@@ -11,7 +11,7 @@ class todaysCuriosity {
     this.inputContext = this.inputCanvas.getContext('2d');
     this.outputContext = this.outputCanvas.getContext('2d');
 
-    this.inputContext.drawImage(this.baseImage, 0, 0);
+    this.inputContext.drawImage(baseImage, 0, 0);
   }
   
   setDivisions(xDivisions, yDivisions, reductionRatio) {
@@ -47,6 +47,7 @@ class todaysCuriosity {
 
   reversePixels(){
     this.loopThroughImageDivisions(this.paintReverseBlocks.bind(this));
+    this.outputCanvas.style.transform="scale(-1,-1)"
     
     return {
       inputCanvas : this.inputCanvas,
@@ -76,7 +77,6 @@ class todaysCuriosity {
     }
   }
 };
-
 
 function brightenPixels({width, height, data}) {
   return new ImageData(
