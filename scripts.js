@@ -52,6 +52,21 @@ function reducePixels(baseImage, xDivisions, yDivisions, reductionRatio) {
   let pixels = inputContext.getImageData(0, 0, inputContext.canvas.width, inputContext.canvas.height);
   brightPixels = brightenPixels(pixels);
 
+  loopThroughImageDivisions( baseImage, xDivisions, yDivisions, reductionRatio, 
+    ( indexX, indexY, sampleWidth, sampleHeight ) => {
+      const dx = indexX * reductionRatio;
+      const dy = indexY * reductionRatio;
+      //highlight on the original image
+      inputContext.putImageData(brightPixels, 0, 0, indexX, indexY, sampleWidth, sampleHeight)
+      //draw new image block of pixels
+      outputContext.drawImage(baseImage, indexX, indexY, sampleWidth, sampleHeight, dx, dy, sampleWidth+2, sampleHeight+2);
+  });
+  
+  return {inputCanvas, outputCanvas};
+}
+
+function loopThroughImageDivisions(baseImage, xDivisions, yDivisions, reductionRatio, fn) {
+
   const divisionWidth = baseImage.width / xDivisions;
   const divisionHeight = baseImage.height / yDivisions;
   const sampleWidth = divisionWidth * reductionRatio;
@@ -59,16 +74,9 @@ function reducePixels(baseImage, xDivisions, yDivisions, reductionRatio) {
 
   for (let indexX = 0; indexX+1 < baseImage.width; indexX += divisionWidth) {
     for (let indexY = 0; indexY+1 < baseImage.height; indexY += divisionHeight) {
-      const dx = indexX * reductionRatio;
-      const dy = indexY * reductionRatio;
-      //highlight on the original image
-      inputContext.putImageData(brightPixels, 0, 0, indexX, indexY, sampleWidth, sampleHeight)
-      //draw new image block of pixels
-      outputContext.drawImage(baseImage, indexX, indexY, sampleWidth, sampleHeight, dx, dy, sampleWidth+2, sampleHeight+2);
+      fn(indexX, indexY, sampleWidth, sampleHeight);
     }
   }
-
-  return {inputCanvas, outputCanvas};
 }
 
 function paintImageToCanvas(theImage, context){  
