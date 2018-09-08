@@ -12,9 +12,12 @@ class todaysCuriosity {
     this.outputContext = this.outputCanvas.getContext('2d');
 
     this.inputContext.drawImage(baseImage, 0, 0);
+    
+    this.setDivisions();
+    this.setOffset();
   }
   
-  setDivisions(xDivisions, yDivisions, reductionRatio) {
+  setDivisions(xDivisions = 20, yDivisions = 20, reductionRatio = 1) {
     this.xDivisions = xDivisions;
     this.yDivisions = yDivisions;
 
@@ -22,6 +25,11 @@ class todaysCuriosity {
 
     this.outputCanvas.width = this.baseImage.width * reductionRatio;
     this.outputCanvas.height = this.baseImage.height * reductionRatio;
+  }
+
+  setOffset(xOffset = 0, yOffset = 0) {
+    this.xOffset = xOffset;
+    this.yOffset = yOffset;
   }
   
   reducePixels() {
@@ -69,9 +77,11 @@ class todaysCuriosity {
     const divisionHeight = this.baseImage.height / this.yDivisions;
     const sampleWidth = divisionWidth * this.reductionRatio;
     const sampleHeight = divisionHeight * this.reductionRatio;
+    const xPixelOffset = divisionWidth * this.xOffset
+    const yPixelOffset = divisionHeight * this.yOffset
   
-    for (let indexX = 0; indexX+1 < this.baseImage.width; indexX += divisionWidth) {
-      for (let indexY = 0; indexY+1 < this.baseImage.height; indexY += divisionHeight) {
+    for (let indexX = xPixelOffset; indexX+1 < this.baseImage.width; indexX += divisionWidth) {
+      for (let indexY = yPixelOffset; indexY+1 < this.baseImage.height; indexY += divisionHeight) {
         fn(indexX, indexY, sampleWidth, sampleHeight);
       }
     }

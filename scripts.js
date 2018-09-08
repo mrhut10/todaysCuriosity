@@ -4,6 +4,7 @@ function loadImage() {
   base_image.onload = function(){
     const curiosity = new todaysCuriosity(base_image);
     curiosity.setDivisions(10, 10, 0.5);
+    curiosity.setOffset(0.2, 0.2);
     // const {inputCanvas, outputCanvas} = curiosity.reducePixels();
     const {inputCanvas, outputCanvas} = curiosity.reversePixels();
 
