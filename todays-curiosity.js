@@ -21,21 +21,19 @@ class todaysCuriosity {
     this.outputCanvas.width = this.baseImage.width * reductionRatio;
     this.outputCanvas.height = this.baseImage.height * reductionRatio;
   }
-    
+  
   reducePixels() {
-    
     this.inputContext.drawImage(this.baseImage, 0, 0);
     let pixels = this.inputContext.getImageData(0, 0, this.inputContext.canvas.width, this.inputContext.canvas.height);
     let brightPixels = brightenPixels(pixels);
-  
-    loopThroughImageDivisions(this.baseImage, this.xDivisions, this.yDivisions, this.reductionRatio, 
-      ( indexX, indexY, sampleWidth, sampleHeight ) => {
-        const dx = indexX * this.reductionRatio;
-        const dy = indexY * this.reductionRatio;
-        //highlight on the original image
-        this.inputContext.putImageData(brightPixels, 0, 0, indexX, indexY, sampleWidth, sampleHeight)
-        //draw new image block of pixels
-        this.outputContext.drawImage(this.baseImage, indexX, indexY, sampleWidth, sampleHeight, dx, dy, sampleWidth+2, sampleHeight+2);
+    
+    this.loopThroughImageDivisions( ( indexX, indexY, sampleWidth, sampleHeight ) => {
+      const dx = indexX * this.reductionRatio;
+      const dy = indexY * this.reductionRatio;
+      //highlight on the original image
+      this.inputContext.putImageData(brightPixels, 0, 0, indexX, indexY, sampleWidth, sampleHeight)
+      //draw new image block of pixels
+      this.outputContext.drawImage(this.baseImage, indexX, indexY, sampleWidth, sampleHeight, dx, dy, sampleWidth+2, sampleHeight+2);
     });
 
     return {
@@ -43,18 +41,31 @@ class todaysCuriosity {
       outputCanvas : this.outputCanvas,
     };
   }
-};
 
-  function paintCoolShuffledAvatarToCanvas(imageData, context, orgCtx) {
+  loopThroughImageDivisions(fn) {
+    const divisionWidth = this.baseImage.width / this.xDivisions;
+    const divisionHeight = this.baseImage.height / this.yDivisions;
+    const sampleWidth = divisionWidth * this.reductionRatio;
+    const sampleHeight = divisionHeight * this.reductionRatio;
+  
+    for (let indexX = 0; indexX+1 < this.baseImage.width; indexX += divisionWidth) {
+      for (let indexY = 0; indexY+1 < this.baseImage.height; indexY += divisionHeight) {
+        fn(indexX, indexY, sampleWidth, sampleHeight);
+      }
+    }
+  }
+};
+  
+function paintCoolShuffledAvatarToCanvas(imageData, context, orgCtx) {
   const divsX = 12;
   const divsY = 10;
   const dutyCycle = 100 / 100;
-
+  
   context.canvas.width = imageData.width * dutyCycle;
   context.canvas.height = imageData.height * dutyCycle;
   let brightPixels = orgCtx.getImageData(0, 0, orgCtx.canvas.width, orgCtx.canvas.height);
   brightPixels = brightenPixels(brightPixels);
-
+  
   const divWidth = imageData.width / divsX;
   const divHeight = imageData.height / divsY;
   for (let indexX = 0; indexX+1 < imageData.width; indexX += divWidth) {
@@ -74,19 +85,6 @@ class todaysCuriosity {
 }
 
 
-function loopThroughImageDivisions(baseImage, xDivisions, yDivisions, reductionRatio, fn) {
-
-  const divisionWidth = baseImage.width / xDivisions;
-  const divisionHeight = baseImage.height / yDivisions;
-  const sampleWidth = divisionWidth * reductionRatio;
-  const sampleHeight = divisionHeight * reductionRatio;
-
-  for (let indexX = 0; indexX+1 < baseImage.width; indexX += divisionWidth) {
-    for (let indexY = 0; indexY+1 < baseImage.height; indexY += divisionHeight) {
-      fn(indexX, indexY, sampleWidth, sampleHeight);
-    }
-  }
-}
 
 function paintImageToCanvas(theImage, context){  
   const width = theImage.width;
