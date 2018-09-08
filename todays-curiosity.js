@@ -10,6 +10,8 @@ class todaysCuriosity {
 
     this.inputContext = this.inputCanvas.getContext('2d');
     this.outputContext = this.outputCanvas.getContext('2d');
+
+    this.inputContext.drawImage(this.baseImage, 0, 0);
   }
   
   setDivisions(xDivisions, yDivisions, reductionRatio) {
@@ -23,23 +25,24 @@ class todaysCuriosity {
   }
   
   reducePixels() {
-    this.inputContext.drawImage(this.baseImage, 0, 0);
     let pixels = this.inputContext.getImageData(0, 0, this.inputContext.canvas.width, this.inputContext.canvas.height);
-    let brightPixels = brightenPixels(pixels);
+    this.brightPixels = brightenPixels(pixels);
     
-    this.loopThroughImageDivisions( ( indexX, indexY, sampleWidth, sampleHeight ) => {
-      const dx = indexX * this.reductionRatio;
-      const dy = indexY * this.reductionRatio;
-      //highlight on the original image
-      this.inputContext.putImageData(brightPixels, 0, 0, indexX, indexY, sampleWidth, sampleHeight)
-      //draw new image block of pixels
-      this.outputContext.drawImage(this.baseImage, indexX, indexY, sampleWidth, sampleHeight, dx, dy, sampleWidth+2, sampleHeight+2);
-    });
+    this.loopThroughImageDivisions(this.paintReduceBlocks.bind(this));
 
     return {
       inputCanvas : this.inputCanvas,
       outputCanvas : this.outputCanvas,
-    };
+    };  
+  }
+
+  paintReduceBlocks( indexX, indexY, sampleWidth, sampleHeight ) {
+    const dx = indexX * this.reductionRatio;
+    const dy = indexY * this.reductionRatio;
+    //highlight on the original image
+    this.inputContext.putImageData(this.brightPixels, 0, 0, indexX, indexY, sampleWidth, sampleHeight)
+    //draw new image block of pixels
+    this.outputContext.drawImage(this.baseImage, indexX, indexY, sampleWidth, sampleHeight, dx, dy, sampleWidth+2, sampleHeight+2);
   }
 
   loopThroughImageDivisions(fn) {
@@ -72,8 +75,6 @@ function paintCoolShuffledAvatarToCanvas(imageData, context, orgCtx) {
     for (let indexY = 0; indexY+1 < imageData.height; indexY += divHeight) {
       const dx = indexX * dutyCycle;
       const dy = indexY * dutyCycle;
-      const reverseDx = imageData.width * dutyCycle - dx
-      const reverseDy = imageData.height * dutyCycle - dy 
       const reverseIndexX = imageData.width - indexX - divWidth;
       const reverseIndexY = imageData.height - indexY - divHeight;
       //draw new image block of pixels
