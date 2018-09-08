@@ -1,43 +1,47 @@
 class todaysCuriosity {
-  constructor() {
+  constructor(baseImage) {
+    this.baseImage = baseImage;
+
     this.inputCanvas = document.createElement('canvas');
     this.outputCanvas = document.createElement('canvas');
+    
+    this.inputCanvas.width = baseImage.width;
+    this.inputCanvas.height = baseImage.height;
+
     this.inputContext = this.inputCanvas.getContext('2d');
     this.outputContext = this.outputCanvas.getContext('2d');
   }
-    
+  
   setDivisions(xDivisions, yDivisions, reductionRatio) {
     this.xDivisions = xDivisions;
     this.yDivisions = yDivisions;
+
     this.reductionRatio = reductionRatio;
+
+    this.outputCanvas.width = this.baseImage.width * reductionRatio;
+    this.outputCanvas.height = this.baseImage.height * reductionRatio;
   }
     
-  reducePixels(baseImage) {
-    const inputCanvas = document.createElement('canvas');
-    const outputCanvas = document.createElement('canvas');
-    const inputContext = inputCanvas.getContext('2d');
-    const outputContext = outputCanvas.getContext('2d');
+  reducePixels() {
     
-    inputContext.canvas.width = baseImage.width;
-    inputContext.canvas.height = baseImage.height;
-    outputContext.canvas.width = baseImage.width * this.reductionRatio;
-    outputContext.canvas.height = baseImage.height * this.reductionRatio;
-    
-    inputContext.drawImage(baseImage, 0, 0);
-    let pixels = inputContext.getImageData(0, 0, inputContext.canvas.width, inputContext.canvas.height);
+    this.inputContext.drawImage(this.baseImage, 0, 0);
+    let pixels = this.inputContext.getImageData(0, 0, this.inputContext.canvas.width, this.inputContext.canvas.height);
     let brightPixels = brightenPixels(pixels);
   
-    loopThroughImageDivisions( baseImage, this.xDivisions, this.yDivisions, this.reductionRatio, 
+    loopThroughImageDivisions(this.baseImage, this.xDivisions, this.yDivisions, this.reductionRatio, 
       ( indexX, indexY, sampleWidth, sampleHeight ) => {
         const dx = indexX * this.reductionRatio;
         const dy = indexY * this.reductionRatio;
         //highlight on the original image
-        inputContext.putImageData(brightPixels, 0, 0, indexX, indexY, sampleWidth, sampleHeight)
+        this.inputContext.putImageData(brightPixels, 0, 0, indexX, indexY, sampleWidth, sampleHeight)
         //draw new image block of pixels
-        outputContext.drawImage(baseImage, indexX, indexY, sampleWidth, sampleHeight, dx, dy, sampleWidth+2, sampleHeight+2);
+        this.outputContext.drawImage(this.baseImage, indexX, indexY, sampleWidth, sampleHeight, dx, dy, sampleWidth+2, sampleHeight+2);
     });
-    
-    return {inputCanvas, outputCanvas};
+
+    return {
+      inputCanvas : this.inputCanvas,
+      outputCanvas : this.outputCanvas,
+    };
   }
 };
 
