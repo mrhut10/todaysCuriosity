@@ -1,17 +1,47 @@
-  class todaysCuriosity {
-    constructor() {
-      this.inputCanvas = document.createElement('canvas');
-      this.outputCanvas = document.createElement('canvas');
-      this.inputContext = this.inputCanvas.getContext('2d');
-      this.outputContext = this.outputCanvas.getContext('2d');
-    }
+class todaysCuriosity {
+  constructor() {
+    this.inputCanvas = document.createElement('canvas');
+    this.outputCanvas = document.createElement('canvas');
+    this.inputContext = this.inputCanvas.getContext('2d');
+    this.outputContext = this.outputCanvas.getContext('2d');
+  }
     
-    getTestMethod() {
-      return this.inputCanvas;
-    }
-  };
+  setDivisions(xDivisions, yDivisions, reductionRatio) {
+    this.xDivisions = xDivisions;
+    this.yDivisions = yDivisions;
+    this.reductionRatio = reductionRatio;
+  }
+    
+  reducePixels(baseImage) {
+    const inputCanvas = document.createElement('canvas');
+    const outputCanvas = document.createElement('canvas');
+    const inputContext = inputCanvas.getContext('2d');
+    const outputContext = outputCanvas.getContext('2d');
+    
+    inputContext.canvas.width = baseImage.width;
+    inputContext.canvas.height = baseImage.height;
+    outputContext.canvas.width = baseImage.width * this.reductionRatio;
+    outputContext.canvas.height = baseImage.height * this.reductionRatio;
+    
+    inputContext.drawImage(baseImage, 0, 0);
+    let pixels = inputContext.getImageData(0, 0, inputContext.canvas.width, inputContext.canvas.height);
+    let brightPixels = brightenPixels(pixels);
+  
+    loopThroughImageDivisions( baseImage, this.xDivisions, this.yDivisions, this.reductionRatio, 
+      ( indexX, indexY, sampleWidth, sampleHeight ) => {
+        const dx = indexX * this.reductionRatio;
+        const dy = indexY * this.reductionRatio;
+        //highlight on the original image
+        inputContext.putImageData(brightPixels, 0, 0, indexX, indexY, sampleWidth, sampleHeight)
+        //draw new image block of pixels
+        outputContext.drawImage(baseImage, indexX, indexY, sampleWidth, sampleHeight, dx, dy, sampleWidth+2, sampleHeight+2);
+    });
+    
+    return {inputCanvas, outputCanvas};
+  }
+};
 
-function paintCoolShuffledAvatarToCanvas(imageData, context, orgCtx) {
+  function paintCoolShuffledAvatarToCanvas(imageData, context, orgCtx) {
   const divsX = 12;
   const divsY = 10;
   const dutyCycle = 100 / 100;
@@ -39,33 +69,6 @@ function paintCoolShuffledAvatarToCanvas(imageData, context, orgCtx) {
   }
 }
 
-function reducePixels(baseImage, xDivisions, yDivisions, reductionRatio) {
-  const inputCanvas = document.createElement('canvas');
-  const outputCanvas = document.createElement('canvas');
-  const inputContext = inputCanvas.getContext('2d');
-  const outputContext = outputCanvas.getContext('2d');
-  
-  inputContext.canvas.width = baseImage.width;
-  inputContext.canvas.height = baseImage.height;
-  outputContext.canvas.width = baseImage.width * reductionRatio;
-  outputContext.canvas.height = baseImage.height * reductionRatio;
-  
-  inputContext.drawImage(baseImage, 0, 0);
-  let pixels = inputContext.getImageData(0, 0, inputContext.canvas.width, inputContext.canvas.height);
-  brightPixels = brightenPixels(pixels);
-
-  loopThroughImageDivisions( baseImage, xDivisions, yDivisions, reductionRatio, 
-    ( indexX, indexY, sampleWidth, sampleHeight ) => {
-      const dx = indexX * reductionRatio;
-      const dy = indexY * reductionRatio;
-      //highlight on the original image
-      inputContext.putImageData(brightPixels, 0, 0, indexX, indexY, sampleWidth, sampleHeight)
-      //draw new image block of pixels
-      outputContext.drawImage(baseImage, indexX, indexY, sampleWidth, sampleHeight, dx, dy, sampleWidth+2, sampleHeight+2);
-  });
-  
-  return {inputCanvas, outputCanvas};
-}
 
 function loopThroughImageDivisions(baseImage, xDivisions, yDivisions, reductionRatio, fn) {
 
