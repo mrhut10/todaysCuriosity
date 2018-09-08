@@ -9,3 +9,6 @@ function loadImage() {
 }
 
 loadImage();
+
+const testNewInstanceOfClass = new todaysCuriosity();
+console.log(testNewInstanceOfClass.getTestMethod());

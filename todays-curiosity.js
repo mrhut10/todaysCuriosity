@@ -1,3 +1,15 @@
+  class todaysCuriosity {
+    constructor() {
+      this.inputCanvas = document.createElement('canvas');
+      this.outputCanvas = document.createElement('canvas');
+      this.inputContext = this.inputCanvas.getContext('2d');
+      this.outputContext = this.outputCanvas.getContext('2d');
+    }
+    
+    getTestMethod() {
+      return this.inputCanvas;
+    }
+  };
 
 function paintCoolShuffledAvatarToCanvas(imageData, context, orgCtx) {
   const divsX = 12;
