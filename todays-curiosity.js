@@ -4,11 +4,10 @@ class todaysCuriosity {
 
     this.createCanvases();
     this.paintInputImage();
+    this.createBrightpixels();
     this.setDivisions();
     this.setReductionRatio();
     this.setOffset();
-    let pixels = this.inputContext.getImageData(0, 0, this.inputContext.canvas.width, this.inputContext.canvas.height);
-    this.brightPixels = brightenPixels(pixels);
   }
   
   createCanvases() {
@@ -23,6 +22,11 @@ class todaysCuriosity {
     this.inputCanvas.width = this.baseImage.width;
     this.inputCanvas.height = this.baseImage.height;
     this.inputContext.drawImage(this.baseImage, 0, 0);
+  }
+  
+  createBrightpixels() {
+    let pixels = this.inputContext.getImageData(0, 0, this.inputContext.canvas.width, this.inputContext.canvas.height);
+    this.brightPixels = brightenPixels(pixels);
   }
   
   setDivisions(xDivisions = 20, yDivisions = 20) {
@@ -62,7 +66,7 @@ class todaysCuriosity {
 
   getReversedPixelBlocks(){
     this.loopThroughImageBlocks(this.paintReverseBlocks.bind(this));
-    this.outputCanvas.style.transform="scale(-1,-1)"
+    this.outputCanvas.style.transform="scale(-1,-1)";
     
     return {
       inputCanvas : this.inputCanvas,
