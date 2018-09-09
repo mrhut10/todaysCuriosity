@@ -7,6 +7,8 @@ class todaysCuriosity {
     this.setDivisions();
     this.setReductionRatio();
     this.setOffset();
+    let pixels = this.inputContext.getImageData(0, 0, this.inputContext.canvas.width, this.inputContext.canvas.height);
+    this.brightPixels = brightenPixels(pixels);
   }
   
   createCanvases() {
@@ -41,9 +43,6 @@ class todaysCuriosity {
   }
   
   getReducedPixelBlocks() {
-    let pixels = this.inputContext.getImageData(0, 0, this.inputContext.canvas.width, this.inputContext.canvas.height);
-    this.brightPixels = brightenPixels(pixels);
-    
     this.loopThroughImageBlocks(this.paintReduceBlocks.bind(this));
 
     return {
@@ -76,6 +75,8 @@ class todaysCuriosity {
     const dy = indexY * this.reductionRatio;
     const reverseIndexX = this.baseImage.width - indexX - blockWidth;
     const reverseIndexY = this.baseImage.height - indexY - blockHeight;
+    //highlight on the original image
+    this.inputContext.putImageData(this.brightPixels, 0, 0, reverseIndexX, reverseIndexY, blockWidth, blockHeight)
     //draw new image block of pixels
     this.outputContext.drawImage(this.baseImage, reverseIndexX, reverseIndexY, blockWidth, blockHeight, dx, dy, blockWidth+2, blockHeight+2);
   }
