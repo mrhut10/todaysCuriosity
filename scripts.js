@@ -6,8 +6,8 @@ function loadImage() {
     curiosity.setDivisions(10, 10);
     curiosity.setReductionRatio(0.5)
     curiosity.setOffset(0.2, 0.2);
-    // const {inputCanvas, outputCanvas} = curiosity.reducePixels();
-    const {inputCanvas, outputCanvas} = curiosity.reversePixels();
+    // const {inputCanvas, outputCanvas} = curiosity.getReducedPixelBlocks();
+    const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
 
     document.body.appendChild(inputCanvas);
     document.body.appendChild(outputCanvas);

@@ -40,11 +40,11 @@ class todaysCuriosity {
     this.yOffset = yOffset;
   }
   
-  reducePixels() {
+  getReducedPixelBlocks() {
     let pixels = this.inputContext.getImageData(0, 0, this.inputContext.canvas.width, this.inputContext.canvas.height);
     this.brightPixels = brightenPixels(pixels);
     
-    this.loopThroughImageDivisions(this.paintReduceBlocks.bind(this));
+    this.loopThroughImageBlocks(this.paintReduceBlocks.bind(this));
 
     return {
       inputCanvas : this.inputCanvas,
@@ -52,17 +52,17 @@ class todaysCuriosity {
     };  
   }
 
-  paintReduceBlocks( indexX, indexY, sampleWidth, sampleHeight ) {
+  paintReduceBlocks( indexX, indexY, blockWidth, blockHeight ) {
     const dx = indexX * this.reductionRatio;
     const dy = indexY * this.reductionRatio;
     //highlight on the original image
-    this.inputContext.putImageData(this.brightPixels, 0, 0, indexX, indexY, sampleWidth, sampleHeight)
+    this.inputContext.putImageData(this.brightPixels, 0, 0, indexX, indexY, blockWidth, blockHeight)
     //draw new image block of pixels
-    this.outputContext.drawImage(this.baseImage, indexX, indexY, sampleWidth, sampleHeight, dx, dy, sampleWidth+2, sampleHeight+2);
+    this.outputContext.drawImage(this.baseImage, indexX, indexY, blockWidth, blockHeight, dx, dy, blockWidth+2, blockHeight+2);
   }
 
-  reversePixels(){
-    this.loopThroughImageDivisions(this.paintReverseBlocks.bind(this));
+  getReversedPixelBlocks(){
+    this.loopThroughImageBlocks(this.paintReverseBlocks.bind(this));
     this.outputCanvas.style.transform="scale(-1,-1)"
     
     return {
@@ -71,26 +71,26 @@ class todaysCuriosity {
     };  
   }
 
-  paintReverseBlocks( indexX, indexY, sampleWidth, sampleHeight ) {
+  paintReverseBlocks( indexX, indexY, blockWidth, blockHeight ) {
     const dx = indexX * this.reductionRatio;
     const dy = indexY * this.reductionRatio;
-    const reverseIndexX = this.baseImage.width - indexX - sampleWidth;
-    const reverseIndexY = this.baseImage.height - indexY - sampleHeight;
+    const reverseIndexX = this.baseImage.width - indexX - blockWidth;
+    const reverseIndexY = this.baseImage.height - indexY - blockHeight;
     //draw new image block of pixels
-    this.outputContext.drawImage(this.baseImage, reverseIndexX, reverseIndexY, sampleWidth, sampleHeight, dx, dy, sampleWidth+2, sampleHeight+2);
+    this.outputContext.drawImage(this.baseImage, reverseIndexX, reverseIndexY, blockWidth, blockHeight, dx, dy, blockWidth+2, blockHeight+2);
   }
 
-  loopThroughImageDivisions(fn) {
+  loopThroughImageBlocks(fn) {
     const divisionWidth = this.baseImage.width / this.xDivisions;
     const divisionHeight = this.baseImage.height / this.yDivisions;
-    const sampleWidth = divisionWidth * this.reductionRatio;
-    const sampleHeight = divisionHeight * this.reductionRatio;
+    const blockWidth = divisionWidth * this.reductionRatio;
+    const blockHeight = divisionHeight * this.reductionRatio;
     const xPixelOffset = divisionWidth * this.xOffset
     const yPixelOffset = divisionHeight * this.yOffset
   
     for (let indexX = xPixelOffset; indexX+1 < this.baseImage.width; indexX += divisionWidth) {
       for (let indexY = yPixelOffset; indexY+1 < this.baseImage.height; indexY += divisionHeight) {
-        fn(indexX, indexY, sampleWidth, sampleHeight);
+        fn(indexX, indexY, blockWidth, blockHeight);
       }
     }
 
