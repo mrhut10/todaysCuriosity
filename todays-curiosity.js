@@ -2,27 +2,35 @@ class todaysCuriosity {
   constructor(baseImage) {
     this.baseImage = baseImage;
 
-    this.inputCanvas = document.createElement('canvas');
-    this.outputCanvas = document.createElement('canvas');
-    
-    this.inputCanvas.width = baseImage.width;
-    this.inputCanvas.height = baseImage.height;
-
-    this.inputContext = this.inputCanvas.getContext('2d');
-    this.outputContext = this.outputCanvas.getContext('2d');
-
-    this.inputContext.drawImage(baseImage, 0, 0);
-    
+    this.createCanvases();
+    this.paintInputImage();
     this.setDivisions();
+    this.setReductionRatio();
     this.setOffset();
   }
   
-  setDivisions(xDivisions = 20, yDivisions = 20, reductionRatio = 1) {
+  createCanvases() {
+    this.inputCanvas = document.createElement('canvas');
+    this.outputCanvas = document.createElement('canvas');
+    
+    this.inputContext = this.inputCanvas.getContext('2d');
+    this.outputContext = this.outputCanvas.getContext('2d');
+  }
+  
+  paintInputImage() {
+    this.inputCanvas.width = this.baseImage.width;
+    this.inputCanvas.height = this.baseImage.height;
+    this.inputContext.drawImage(this.baseImage, 0, 0);
+  }
+  
+  setDivisions(xDivisions = 20, yDivisions = 20) {
     this.xDivisions = xDivisions;
     this.yDivisions = yDivisions;
-
+  }
+  
+  setReductionRatio(reductionRatio = 1) {
     this.reductionRatio = reductionRatio;
-
+  
     this.outputCanvas.width = this.baseImage.width * reductionRatio;
     this.outputCanvas.height = this.baseImage.height * reductionRatio;
   }
@@ -85,6 +93,7 @@ class todaysCuriosity {
         fn(indexX, indexY, sampleWidth, sampleHeight);
       }
     }
+
   }
 };
 
