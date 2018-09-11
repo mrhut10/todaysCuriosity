@@ -47,6 +47,7 @@ class todaysCuriosity {
   }
   
   getReducedPixelBlocks() {
+    this.paintInputImage();
     this.loopThroughImageBlocks(this.paintReduceBlocks.bind(this));
 
     return {
@@ -65,6 +66,7 @@ class todaysCuriosity {
   }
 
   getReversedPixelBlocks(){
+    this.paintInputImage();
     this.loopThroughImageBlocks(this.paintReverseBlocks.bind(this));
     this.outputCanvas.style.transform="scale(-1,-1)";
     
