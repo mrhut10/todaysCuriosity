@@ -1,8 +1,3 @@
-/*
-  khutten@users.noreply.github.com
-*/
-
-
 #wrapper {
   display: grid;
   grid-template-areas: "header" "main" "footer";
@@ -18,12 +13,13 @@
 
 #main {
   grid-area: main;
-  border: 1px solid blue;
   display: grid;
   grid-template-areas: 
     "settings" "output";
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 15em auto;
   grid-template-rows: 1fr;
+  margin:5px;
+  background:darkgray;
 
 }
 
@@ -33,8 +29,10 @@
   box-shadow: 5px 0px 10px 0px rgba(44,53,61,0.54);
   background:white;
   grid-area: settings;
-  /*visibility: hidden;*/
-  /*display: none;*/
+  /*
+  display: none;
+  visibility: hidden;
+  */
 }
 
 #input-display {
@@ -49,7 +47,7 @@
   height:100%;
   text-align: center;
   padding: 15px auto;
-  background:darkgray;
+
 }
 #output-display canvas {
   margin: 1em auto;
@@ -59,6 +57,6 @@
 
 #footer {
   grid-area: footer;
-  border:1px solid blue;
+  text-align: center;
 }
 
