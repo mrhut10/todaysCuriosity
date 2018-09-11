@@ -1,0 +1,64 @@
+/*
+  khutten@users.noreply.github.com
+*/
+
+
+#wrapper {
+  display: grid;
+  grid-template-areas: "header" "main" "footer";
+  grid-template-columns: auto;
+  grid-template-rows: 1fr 5fr 1fr;
+}
+
+#header {
+  grid-area: header;
+  background: cornflowerblue;
+  text-align: center;
+}
+
+#main {
+  grid-area: main;
+  border: 1px solid blue;
+  display: grid;
+  grid-template-areas: 
+    "settings" "output";
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: 1fr;
+
+}
+
+#settings {
+  box-sizing: border-box;
+  transform: scale(.95);
+  box-shadow: 5px 0px 10px 0px rgba(44,53,61,0.54);
+  background:white;
+  grid-area: settings;
+  /*visibility: hidden;*/
+  /*display: none;*/
+}
+
+#input-display {
+  padding:5px;
+}
+
+#input-display canvas {
+  width:100%;
+}
+
+#output-display {
+  height:100%;
+  text-align: center;
+  padding: 15px auto;
+  background:darkgray;
+}
+#output-display canvas {
+  margin: 1em auto;
+  box-shadow: 0px -15px 28px 3px rgba(44,53,61,0.54);
+}
+
+
+#footer {
+  grid-area: footer;
+  border:1px solid blue;
+}
+
