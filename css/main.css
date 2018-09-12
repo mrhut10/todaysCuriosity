@@ -29,6 +29,7 @@
   box-shadow: 5px 0px 10px 0px rgba(44,53,61,0.54);
   background:white;
   grid-area: settings;
+  padding:10px;
   /*
   display: none;
   visibility: hidden;
