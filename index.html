@@ -18,25 +18,32 @@
       <div id="settings">
         <div id="input-display"></div>
         <div id="slider-container">
-          <label for="x-divisions">x div</label>
-          <input type="range" min="5" max="100" value="15" class="slider" id="x-divisions">
-          <output name="x-divisionsOutput" id="x-divisionsOutput" value="15" class="slider-output" ></output>
-                
-          <label for="y-divisions">y div</label>
-          <input type="range" min="5" max="80"  value="15" class="slider" id="y-divisions">
-          <output name="y-divisionsOutput" id="y-divisionsOutput" value="15" class="slider-output"></output>
+          <fieldset>
+            <label for="x-divisions">x div</label>
+            <input type="range" min="5" max="100" value="15" class="slider" id="x-divisions">
+            <output name="x-divisionsOutput" id="x-divisionsOutput" value="15" class="slider-output" ></output>
+
+            <label for="y-divisions">y div</label>
+            <input type="range" min="5" max="80"  value="15" class="slider" id="y-divisions">
+            <output name="y-divisionsOutput" id="y-divisionsOutput" value="15" class="slider-output"></output>
+            <label for="ratio">ratio</label>
+            <input type="range" min="0" max="100"  value="50" class="slider" id="ratio">
+            <output name="ratio" id="ratio" value="50" class="slider-output"></output>
+          </fieldset>
+          
+          <fieldset>
+            <label for="x-offset">x offset</label>
+            <input type="range" min="0" max="100"  value="1" class="slider" id="x-offset">
+            <output name="x-offset" id="x-offset" value="1" class="slider-output"></output>
+
+            <label for="y-offset">y offset</label>
+            <input type="range" min="0" max="100"  value="1" class="slider" id="y-offset">
+            <output name="y-offset" id="y-offset" value="1" class="slider-output"></output>
+          </fieldset>
             
-          <label for="ratio">ratio</label>
-          <input type="range" min="0" max="100"  value="50" class="slider" id="ratio">
-          <output name="ratio" id="ratio" value="50" class="slider-output"></output>
+          
                 
-          <label for="x-offset">x offset</label>
-          <input type="range" min="0" max="100"  value="1" class="slider" id="x-offset">
-          <output name="x-offset" id="x-offset" value="1" class="slider-output"></output>
                 
-          <label for="y-offset">y offset</label>
-          <input type="range" min="0" max="100"  value="1" class="slider" id="y-offset">
-          <output name="y-offset" id="y-offset" value="1" class="slider-output"></output>
         </div>
 
       </div>

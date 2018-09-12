@@ -36,6 +36,13 @@
   */
 }
 
+#settings input[type=range] {
+  width: 80%;
+  display:block;
+  margin:0px 5px 15px 0px;
+  font-size: 1.3em;
+}
+
 #input-display {
   padding:5px;
 }
