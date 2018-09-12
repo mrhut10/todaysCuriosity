@@ -1,25 +1,41 @@
-function loadImage() {
-  base_image = new Image();
-  base_image.src = 'george.jpg';
-  base_image.onload = function(){
-    const curiosity = new todaysCuriosity(base_image);
-    curiosity.setDivisions(10, 10);
-    curiosity.setReductionRatio(0.5)
-    curiosity.setOffset(0.2, 0.2);
-    // const {inputCanvas, outputCanvas} = curiosity.getReducedPixelBlocks();
-    const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
+import loadImage from "blueimp-load-image";
+import todaysCuriosity from './todays-curiosity';
+//const todaysCuriosity = require('./todays-curiosity');
 
-    const inputDiv = document.getElementById('input-display');
-    console.log(inputDiv);
-    inputDiv.appendChild(inputCanvas);
-    const outputDiv = document.getElementById('output-display');
-    outputDiv.appendChild(outputCanvas);
-
-    listenerStuff(curiosity);
-  }
+// Check for the various File API support.
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+  // alert('file api works')
+} else {
+  alert('Oh no, looks like your browser might be a bit old for this app to work. Maybe try the lates Chrome or Firefox. and call ghast busters');
 }
 
-loadImage();
+document.getElementById('file-input').onchange = function (e) {
+  loadImage(
+      e.target.files[0],
+      function (img) {
+        // console.log(todaysCuriosity(img));
+        const curiosity = new todaysCuriosity(img);
+        curiosity.setDivisions(10, 10);
+        curiosity.setReductionRatio(0.5)
+        curiosity.setOffset(0.2, 0.2);
+        // const {inputCanvas, outputCanvas} = curiosity.getReducedPixelBlocks();
+        const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
+    
+        const inputDiv = document.getElementById('input-display');
+        inputDiv.appendChild(inputCanvas);
+        const outputDiv = document.getElementById('output-display');
+        outputDiv.appendChild(outputCanvas);
+    
+        listenerStuff(curiosity);
+      },
+      {maxWidth: 2000} // Options
+  );
+};
+
+
+
+
+// mainScript();
 
 function listenerStuff(curiosity) {
   const update = (event) => {
@@ -50,5 +66,5 @@ function listenerStuff(curiosity) {
   const sliders = document.querySelectorAll('.slider');
   const sliderOutputs = document.querySelectorAll('.slider-output');
   sliders.forEach(input => input.addEventListener('change', update));
-
 }
+
