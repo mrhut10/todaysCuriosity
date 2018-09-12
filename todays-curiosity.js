@@ -111,3 +111,6 @@ function brightenPixels({width, height, data}) {
     height
   );
 }
+
+
+export default todaysCuriosity;
