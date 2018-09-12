@@ -4,3 +4,6 @@ node_modules
 *.jpeg
 *.png
 .DS_Store
+.cache
+co-auther
+dist
