@@ -4,11 +4,15 @@
   "description": "",
   "main": "scripts.js",
   "scripts": {
-    "start": "browser-sync start --server --files \"*.css, *.html, *.js\""
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.12.5 <2.23.2"
+    "parcel-bundler": "^1.9.7"
+  },
+  "dependencies": {
+    "blueimp-load-image": "^2.19.0"
   }
 }
