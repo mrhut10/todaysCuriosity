@@ -1,1 +1,1 @@
-window.location.replace('https://todayscuriosityjs.netlify.com/');
+window.location.replace('https://todayscuriosity.netlify.com/');
