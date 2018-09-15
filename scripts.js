@@ -9,15 +9,15 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
   alert('Oh no, looks like your browser might be a bit old for this app to work. Maybe try the lates Chrome or Firefox. and call ghast busters');
 }
 
+const curiosity = new todaysCuriosity(new Image(20,20));
+
 document.getElementById('file-input').onchange = function (e) {
   loadImage(
       e.target.files[0],
       function (img) {
-        // console.log(todaysCuriosity(img));
-        const curiosity = new todaysCuriosity(img);
-        curiosity.setDivisions(10, 10);
-        curiosity.setReductionRatio(0.5)
-        curiosity.setOffset(0.2, 0.2);
+        curiosity.baseImage = img;
+        curiosity.paintInputImage();
+        curiosity.createBrightpixels();
         // const {inputCanvas, outputCanvas} = curiosity.getReducedPixelBlocks();
         const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
     
@@ -25,7 +25,7 @@ document.getElementById('file-input').onchange = function (e) {
         inputDiv.appendChild(inputCanvas);
         const outputDiv = document.getElementById('output-display');
         outputDiv.appendChild(outputCanvas);
-    
+        
         listenerStuff(curiosity);
       },
       {maxWidth: 2000} // Options
