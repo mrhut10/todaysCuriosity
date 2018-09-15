@@ -1,6 +1,5 @@
 import loadImage from "blueimp-load-image";
 import todaysCuriosity from './todays-curiosity';
-//const todaysCuriosity = require('./todays-curiosity');
 
 // Check for the various File API support.
 if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -13,11 +12,7 @@ document.getElementById('file-input').onchange = function (e) {
   loadImage(
       e.target.files[0],
       function (img) {
-        // console.log(todaysCuriosity(img));
         const curiosity = new todaysCuriosity(img);
-        curiosity.setDivisions(10, 10);
-        curiosity.setReductionRatio(0.5)
-        curiosity.setOffset(0.2, 0.2);
         // const {inputCanvas, outputCanvas} = curiosity.getReducedPixelBlocks();
         const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
     
@@ -32,39 +27,28 @@ document.getElementById('file-input').onchange = function (e) {
   );
 };
 
-
-
-
-// mainScript();
-
 function listenerStuff(curiosity) {
   const update = (event) => {
-    curiosity.setDivisions(xDivisionsSlider.value, yDivisionsSlider.value)
-    curiosity.setReductionRatio(ratioSlider.value/100);
-    curiosity.setOffset(xOffsetSlider.value/100, yOffsetSlider.value/100);
+    const percentageKeys = ['reductionRatio', 'xOffset', 'yOffset'];
+    const targetKey = event.target.dataset.key;
+    const sliderOutput = document.getElementById(`${event.target.id}-output`);
+    sliderOutput.value = event.target.value;
 
-    sliders.forEach((slider, index) => {
-      sliderOutputs[index].value = slider.value;
-    });
-
+    if (percentageKeys.includes( targetKey ) ) {
+      curiosity[targetKey] = event.target.value / 100;  
+    } else {
+      curiosity[targetKey] = event.target.value;  
+    }
+  
     const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
-    
-    
-    const inputDiv = document.getElementById('input-display');
+
     inputDiv.appendChild(inputCanvas);
-    const outputDiv = document.getElementById('output-display');
     outputDiv.appendChild(outputCanvas);
   };
-  
-  const xDivisionsSlider = document.getElementById('x-divisions');
-  const yDivisionsSlider = document.getElementById('y-divisions');
-  const xOffsetSlider = document.getElementById('x-offset');
-  const yOffsetSlider = document.getElementById('y-offset');
-
-  const ratioSlider = document.getElementById('ratio');
+  const inputDiv = document.getElementById('input-display');
+  const outputDiv = document.getElementById('output-display');
   
   const sliders = document.querySelectorAll('.slider');
-  const sliderOutputs = document.querySelectorAll('.slider-output');
   sliders.forEach(input => input.addEventListener('change', update));
 }
 
