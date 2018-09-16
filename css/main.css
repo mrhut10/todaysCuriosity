@@ -58,6 +58,7 @@
 
 }
 #output-display canvas {
+  width: 70%;
   margin: 1em auto;
   box-shadow: 0px -15px 28px 3px rgba(44,53,61,0.54);
 }
