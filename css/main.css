@@ -19,7 +19,7 @@
   grid-template-columns: 15em auto;
   grid-template-rows: 1fr;
   margin:5px;
-  background:darkgray;
+  background: darkgray;
 
 }
 
@@ -27,35 +27,33 @@
   box-sizing: border-box;
   transform: scale(.95);
   box-shadow: 5px 0px 10px 0px rgba(44,53,61,0.54);
-  background:white;
+  background: white;
   grid-area: settings;
-  padding:10px;
-  /*
-  display: none;
-  visibility: hidden;
-  */
+  padding: 10px;
+  overflow: hidden;
 }
 
 #settings input[type=range] {
   width: 80%;
-  display:block;
-  margin:0px 5px 15px 0px;
+  display: block;
+  margin: 0px 5px 15px 0px;
   font-size: 1.3em;
 }
 
-#input-display {
-  padding:5px;
-}
-
 #input-display canvas {
-  width:100%;
+  width: 100%;
 }
 
+input[type="file"] {
+  margin: 10px;
+}
+fieldset {
+  margin: 10px 0px;
+}
 #output-display {
-  height:100%;
+  height: 100%;
   text-align: center;
   padding: 15px auto;
-
 }
 #output-display canvas {
   width: 70%;
@@ -68,4 +66,3 @@
   grid-area: footer;
   text-align: center;
 }
-
