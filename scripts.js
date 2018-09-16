@@ -38,25 +38,21 @@ function imageSetup (img) {
   const outputDiv = document.getElementById('output-display');
   outputDiv.appendChild(outputCanvas);
   
-  listenerStuff(curiosity);
+  SetupUpdateEvents(curiosity);
 };
 
+function SetupUpdateEvents(curiosity) {
+  const updateAfterSliderChange = (event) => {
+    const sliderOutputToBeUpdated = document.getElementById(`${event.target.id}-output`);
+    sliderOutputToBeUpdated.value = event.target.value;
 
-
-
-// mainScript();
-
-function listenerStuff(curiosity) {
-  const update = (event) => {
+    const curiosityKeyToUpdate = event.target.dataset.key;
     const percentageKeys = ['reductionRatio', 'xOffset', 'yOffset'];
-    const targetKey = event.target.dataset.key;
-    const sliderOutput = document.getElementById(`${event.target.id}-output`);
-    sliderOutput.value = event.target.value;
 
-    if (percentageKeys.includes( targetKey ) ) {
-      curiosity[targetKey] = event.target.value / 100;  
+    if (percentageKeys.includes(curiosityKeyToUpdate)) {
+      curiosity[curiosityKeyToUpdate] = event.target.value / 100;  
     } else {
-      curiosity[targetKey] = event.target.value;  
+      curiosity[curiosityKeyToUpdate] = event.target.value;  
     }
   
     const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
@@ -64,10 +60,11 @@ function listenerStuff(curiosity) {
     inputDiv.appendChild(inputCanvas);
     outputDiv.appendChild(outputCanvas);
   };
+
   const inputDiv = document.getElementById('input-display');
   const outputDiv = document.getElementById('output-display');
   
   const sliders = document.querySelectorAll('.slider');
-  sliders.forEach(input => input.addEventListener('change', update));
+  sliders.forEach(slider => slider.addEventListener('change', updateAfterSliderChange));
 }
 
