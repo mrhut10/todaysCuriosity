@@ -1,5 +1,5 @@
 # todaysCuriosity
-This is a set of single_image_processing effects inspired from art work by Kensuke Koike.
+This is a set of single_image_processing effects inspired from art work by [Kensuke Koike](https://www.instagram.com/kensukekoike/).
 
 You can see a live demo [here](https://todayscuriosity.netlify.com/).
 
