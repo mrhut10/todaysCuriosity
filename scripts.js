@@ -65,6 +65,6 @@ function SetupUpdateEvents(curiosity) {
   const outputDiv = document.getElementById('output-display');
   
   const sliders = document.querySelectorAll('.slider');
-  sliders.forEach(slider => slider.addEventListener('change', updateAfterSliderChange));
+  sliders.forEach(slider => slider.addEventListener('input', updateAfterSliderChange));
 }
 
