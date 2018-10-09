@@ -1,40 +1,37 @@
-#wrapper {
-  display: grid;
-  grid-template-areas: "header" "main" "footer";
-  grid-template-columns: auto;
-  grid-template-rows: 1fr 5fr 1fr;
+html {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
 }
 
-#header {
-  grid-area: header;
-  background: cornflowerblue;
+body {
+  margin: 0 auto;
+  background: #eee;
+}
+
+#header, #footer {
   text-align: center;
 }
 
 #main {
-  grid-area: main;
   display: grid;
   grid-template-areas: 
     "settings" "output";
-  grid-template-columns: 15em auto;
+  grid-template-columns: 20em auto;
   grid-template-rows: 1fr;
-  margin:5px;
-  background: darkgray;
-
+  background: white;
+  padding: 10px;
 }
 
 #settings {
   box-sizing: border-box;
-  transform: scale(.95);
-  box-shadow: 5px 0px 10px 0px rgba(44,53,61,0.54);
-  background: white;
   grid-area: settings;
   padding: 10px;
   overflow: hidden;
 }
 
 #settings input[type=range] {
-  width: 80%;
+  width: 100%;
   display: block;
   margin: 0px 5px 15px 0px;
   font-size: 1.3em;
@@ -45,24 +42,17 @@
 }
 
 input[type="file"] {
-  margin: 10px;
+  margin: 10px 0;
 }
+
 fieldset {
   margin: 10px 0px;
 }
+
 #output-display {
-  height: 100%;
-  text-align: center;
-  padding: 15px auto;
+  padding: 10px;
 }
+
 #output-display canvas {
-  width: 70%;
-  margin: 1em auto;
-  box-shadow: 0px -15px 28px 3px rgba(44,53,61,0.54);
-}
-
-
-#footer {
-  grid-area: footer;
-  text-align: center;
+  display: block;
 }
