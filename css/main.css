@@ -16,7 +16,7 @@
   display: grid;
   grid-template-areas: 
     "settings" "output";
-  grid-template-columns: 15em auto;
+  grid-template-columns: 44vmax auto;
   grid-template-rows: 1fr;
   margin:5px;
   background: darkgray;
