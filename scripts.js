@@ -26,6 +26,9 @@ document.getElementById('file-input').onchange = function (e) {
   );
 };
 
+// Initial sliders output value
+document.querySelectorAll('.slider').forEach(slider => document.getElementById(`${slider.id}-output`).value = slider.value)
+
 function imageSetup (img) {
   curiosity.baseImage = img;
   curiosity.paintInputImage();
