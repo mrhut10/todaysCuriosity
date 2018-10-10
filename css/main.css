@@ -54,5 +54,5 @@ fieldset {
 }
 
 #output-display canvas {
-  display: block;
+  width: 100%;
 }
