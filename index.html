@@ -8,37 +8,30 @@
 <body>
   <div id="wrapper">
     <header id="header">
-      <h1>todays-curiosity</h1>
+      <h1>todays curiosity</h1>
     </header>
     <section id="main">
       <div id="settings">
         <form>
-            <div id="input-display"></div>
-            <input type="file" id="file-input" name="file[]" id=""/>
-            <output name="fileoutput"></output>
+          <div id="input-display"></div>
+          <input type="file" id="file-input" name="file[]" id=""/>
+          <output name="fileoutput"></output>
           <div id="slider-container">
-            <fieldset>
-              <label for="x-divisions">x div:</label>
-              <output name="x-divisionsOutput" id="x-divisions-output" value="15" class="slider-output" ></output>
-              <input type="range" min="5" max="100" value="15" class="slider" id="x-divisions" data-key="xDivisions">
-  
-              <label for="y-divisions">y div:</label>
-              <output name="y-divisionsOutput" id="y-divisions-output" value="15" class="slider-output"></output>
-              <input type="range" min="5" max="80"  value="15" class="slider" id="y-divisions" data-key="yDivisions">
-  
-              <label for="ratio">ratio:</label>
-              <output name="ratio" id="ratio-output" value="50" class="slider-output"></output>
-              <input type="range" min="0" max="100"  value="50" class="slider" id="ratio" data-key="reductionRatio">
-            </fieldset>
-            <fieldset>
-              <label for="x-offset">x offset:</label>
-              <output name="x-offset" id="x-offset-output" value="1" class="slider-output"></output>
-              <input type="range" min="0" max="100"  value="1" class="slider" id="x-offset" data-key="xOffset">
-  
-              <label for="y-offset">y offset:</label>
-              <output name="y-offset" id="y-offset-output" value="1" class="slider-output"></output>
-              <input type="range" min="0" max="100"  value="1" class="slider" id="y-offset" data-key="yOffset">
-            </fieldset>
+            <label for="x-divisions">x div:</label>
+            <output name="x-divisionsOutput" id="x-divisions-output" value="15" class="slider-output" ></output>
+            <input type="range" min="5" max="100" value="15" class="slider" id="x-divisions" data-key="xDivisions">
+            <label for="y-divisions">y div:</label>
+            <output name="y-divisionsOutput" id="y-divisions-output" value="15" class="slider-output"></output>
+            <input type="range" min="5" max="80"  value="15" class="slider" id="y-divisions" data-key="yDivisions">
+            <label for="ratio">ratio:</label>
+            <output name="ratio" id="ratio-output" value="50" class="slider-output"></output>
+            <input type="range" min="0" max="100"  value="50" class="slider" id="ratio" data-key="reductionRatio">
+            <label for="x-offset">x offset:</label>
+            <output name="x-offset" id="x-offset-output" value="1" class="slider-output"></output>
+            <input type="range" min="0" max="100"  value="1" class="slider" id="x-offset" data-key="xOffset">
+            <label for="y-offset">y offset:</label>
+            <output name="y-offset" id="y-offset-output" value="1" class="slider-output"></output>
+            <input type="range" min="0" max="100"  value="1" class="slider" id="y-offset" data-key="yOffset">
           </div>
         </form>          
       </div>
@@ -46,9 +39,9 @@
         <!--output image will get injected here-->
       </div>
     </section>
-    <section id="footer"><h2>
-        footer
-    </h2></section>
+    <section id="footer">
+      <p>A project by <a href="https://github.com/mrhut10">mrhut10</a> and <a href="https://github.com/khutten">khutten</a>.</p>
+    </section>
   </div>
   <script src="scripts.js"></script>
 </body>

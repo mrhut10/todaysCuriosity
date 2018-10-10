@@ -26,6 +26,9 @@ document.getElementById('file-input').onchange = function (e) {
   );
 };
 
+// Initial sliders output value
+document.querySelectorAll('.slider').forEach(slider => document.getElementById(`${slider.id}-output`).value = slider.value)
+
 function imageSetup (img) {
   curiosity.baseImage = img;
   curiosity.paintInputImage();
@@ -65,6 +68,6 @@ function SetupUpdateEvents(curiosity) {
   const outputDiv = document.getElementById('output-display');
   
   const sliders = document.querySelectorAll('.slider');
-  sliders.forEach(slider => slider.addEventListener('change', updateAfterSliderChange));
+  sliders.forEach(slider => slider.addEventListener('input', updateAfterSliderChange));
 }
 
