@@ -1,6 +1,8 @@
 import loadImage from "blueimp-load-image";
 import todaysCuriosity from './todays-curiosity';
 import george from './george.jpg';
+let switchState = false ;
+
 
 // Check for the various File API support.
 if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -34,7 +36,8 @@ function imageSetup (img) {
   curiosity.paintInputImage();
   curiosity.createBrightpixels();
   // const {inputCanvas, outputCanvas} = curiosity.getReducedPixelBlocks();
-  const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
+  // const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
+  const {inputCanvas, outputCanvas} = switchState ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
 
   const inputDiv = document.getElementById('input-display');
   inputDiv.appendChild(inputCanvas);
@@ -47,7 +50,8 @@ function imageSetup (img) {
 function SetupUpdateEvents(curiosity) {
   const updateAfterSliderChange = (event) => {
     const sliderOutputToBeUpdated = document.getElementById(`${event.target.id}-output`);
-    sliderOutputToBeUpdated.value = event.target.value;
+    sliderOutputToBeUpdated.value = event.target.value; 
+    
 
     const curiosityKeyToUpdate = event.target.dataset.key;
     const percentageKeys = ['reductionRatio', 'xOffset', 'yOffset'];
@@ -57,17 +61,45 @@ function SetupUpdateEvents(curiosity) {
     } else {
       curiosity[curiosityKeyToUpdate] = event.target.value;  
     }
-  
-    const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
+
+    const {inputCanvas, outputCanvas} = switchState ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
 
     inputDiv.appendChild(inputCanvas);
     outputDiv.appendChild(outputCanvas);
   };
+
+  // change curiosity method
+  const updateAfterSwitchChange = () => {
+    const {inputCanvas, outputCanvas} = switchState ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
+
+    inputDiv.appendChild(inputCanvas);
+    outputDiv.appendChild(outputCanvas);
+  }
+  // =============
 
   const inputDiv = document.getElementById('input-display');
   const outputDiv = document.getElementById('output-display');
   
   const sliders = document.querySelectorAll('.slider');
   sliders.forEach(slider => slider.addEventListener('input', updateAfterSliderChange));
+  
+  // check on switch change, change the curiosity method
+  const switcher = document.querySelector(".switch");
+  switcher.addEventListener("change", updateAfterSwitchChange);
 }
 
+
+// text change function based on switchState
+stateChanger(); //initial
+
+function  stateChanger() {
+  const stateText = document.querySelector(".state");
+  switchState ? stateText.textContent = "Reversed" : stateText.textContent = "Reduced";
+}
+
+// on click change state
+document.getElementById("switch").addEventListener("click", (e) => {
+  switchState = e.target.checked;
+  stateChanger();
+});
+// ========================================================
