@@ -57,3 +57,70 @@ fieldset {
 #output-display canvas {
   width: 100%;
 }
+
+
+/* method change styles =================================*/
+.method-change{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row-reverse;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 3rem;
+  height: 1.5rem;
+}
+
+.switch input {display:none;}
+
+.switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 1rem;
+  width: 1rem;
+  left: .5rem;
+  bottom: .25rem;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .switch-slider {
+  background-color: grey;
+}
+
+input:focus + .switch-slider {
+  box-shadow: 0 0 1px grey;
+}
+
+input:checked + .switch-slider:before {
+  transform: translateX(1rem);
+}
+
+.switch-slider {
+  border-radius: 10px;
+}
+
+.switch-slider:before {
+  border-radius: 50%;
+}
+
+.state{
+  margin: 0 1rem;
+}
+
+/* ===================================================*/
