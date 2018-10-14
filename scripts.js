@@ -33,8 +33,11 @@ function imageSetup (img) {
   curiosity.baseImage = img;
   curiosity.paintInputImage();
   curiosity.createBrightpixels();
+
   // const {inputCanvas, outputCanvas} = curiosity.getReducedPixelBlocks();
-  const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
+  // const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
+
+  const {inputCanvas, outputCanvas} = document.getElementsByClassName('method-type')[0].checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
 
   const inputDiv = document.getElementById('input-display');
   inputDiv.appendChild(inputCanvas);
@@ -58,7 +61,16 @@ function SetupUpdateEvents(curiosity) {
       curiosity[curiosityKeyToUpdate] = event.target.value;  
     }
   
-    const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
+    // const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
+
+    const {inputCanvas, outputCanvas} = document.getElementsByClassName('method-type')[0].checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
+
+    inputDiv.appendChild(inputCanvas);
+    outputDiv.appendChild(outputCanvas);
+  };
+
+  const updateAfterRadioChange = (event) => {
+    const {inputCanvas, outputCanvas} = document.getElementsByClassName('method-type')[0].checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
 
     inputDiv.appendChild(inputCanvas);
     outputDiv.appendChild(outputCanvas);
@@ -69,5 +81,8 @@ function SetupUpdateEvents(curiosity) {
   
   const sliders = document.querySelectorAll('.slider');
   sliders.forEach(slider => slider.addEventListener('input', updateAfterSliderChange));
+
+  const radios = document.querySelectorAll('input[type=radio]');
+  radios.forEach(radio => radio.addEventListener('input', updateAfterRadioChange));
 }
 
