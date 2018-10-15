@@ -6,3 +6,15 @@ You can see a live demo [here](https://todayscuriosity.netlify.com/).
 Built using raw JS and packed using Parcel.
 
 A project by [mrhut10](https://github.com/mrhut10) and [khutten](https://github.com/khutten).
+
+## Building
+
+you will need node/npm and parcel (parcel can be installed globally with npm)
+
+install dependancies
+
+`npm install`
+
+build with parcel
+
+`parcel index.html`
