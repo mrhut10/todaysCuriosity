@@ -15,9 +15,16 @@
         <form>
           <div id="input-display"></div>
           <input type="file" id="file-input" name="file[]" id=""/>
+
+          <div class="method-change">
+            <p class="state">Reduced</p>
+            <label class="switch">
+              <input id="switch" type="checkbox">
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+          
           <output name="fileoutput"></output>
-          <input type="radio" class="method-type" name="method-type" checked>Reduced
-          <input type="radio" class="method-type" name="method-type">Reversed
           <div id="slider-container">
             <label for="x-divisions">x div:</label>
             <output name="x-divisionsOutput" id="x-divisions-output" value="15" class="slider-output" ></output>
