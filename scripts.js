@@ -1,7 +1,6 @@
 import loadImage from "blueimp-load-image";
 import todaysCuriosity from './todays-curiosity';
 import george from './george.jpg';
-let switchState = false ;
 
 
 // Check for the various File API support.
@@ -35,9 +34,8 @@ function imageSetup (img) {
   curiosity.baseImage = img;
   curiosity.paintInputImage();
   curiosity.createBrightpixels();
-  // const {inputCanvas, outputCanvas} = curiosity.getReducedPixelBlocks();
-  // const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
-  const {inputCanvas, outputCanvas} = switchState ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
+
+  const {inputCanvas, outputCanvas} = document.getElementById('switch').checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
 
   const inputDiv = document.getElementById('input-display');
   inputDiv.appendChild(inputCanvas);
@@ -62,7 +60,7 @@ function SetupUpdateEvents(curiosity) {
       curiosity[curiosityKeyToUpdate] = event.target.value;  
     }
 
-    const {inputCanvas, outputCanvas} = switchState ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
+    const {inputCanvas, outputCanvas} = document.getElementById('switch').checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
 
     inputDiv.appendChild(inputCanvas);
     outputDiv.appendChild(outputCanvas);
@@ -70,7 +68,7 @@ function SetupUpdateEvents(curiosity) {
 
   // change curiosity method
   const updateAfterSwitchChange = () => {
-    const {inputCanvas, outputCanvas} = switchState ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
+    const {inputCanvas, outputCanvas} = document.getElementById('switch').checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
 
     inputDiv.appendChild(inputCanvas);
     outputDiv.appendChild(outputCanvas);
@@ -83,23 +81,8 @@ function SetupUpdateEvents(curiosity) {
   const sliders = document.querySelectorAll('.slider');
   sliders.forEach(slider => slider.addEventListener('input', updateAfterSliderChange));
   
-  // check on switch change, change the curiosity method
-  const switcher = document.querySelector(".switch");
-  switcher.addEventListener("change", updateAfterSwitchChange);
+  const radio = document.getElementById('switch');
+  radio.addEventListener('input', updateAfterSwitchChange);
 }
 
-
-// text change function based on switchState
-stateChanger(); //initial
-
-function  stateChanger() {
-  const stateText = document.querySelector(".state");
-  switchState ? stateText.textContent = "Reversed" : stateText.textContent = "Reduced";
-}
-
-// on click change state
-document.getElementById("switch").addEventListener("click", (e) => {
-  switchState = e.target.checked;
-  stateChanger();
-});
 // ========================================================

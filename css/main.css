@@ -7,7 +7,6 @@ html {
 body {
   margin: 0 auto;
   background: #eee;
-  max-width: 1024px;
 }
 
 #header, #footer {
@@ -18,7 +17,7 @@ body {
   display: grid;
   grid-template-areas: 
     "settings" "output";
-  grid-template-columns: 20em auto;
+  grid-template-columns: 2fr 3fr;
   grid-template-rows: 1fr;
   background: white;
   padding: 10px;
