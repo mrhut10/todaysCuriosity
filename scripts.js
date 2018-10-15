@@ -14,7 +14,7 @@ let curiosity;
 
 const defaultImage = new Image();
 defaultImage.src = george;
-defaultImage.onload = function() {
+defaultImage.onload = () => {
   curiosity = new todaysCuriosity(defaultImage);
   imageSetup(defaultImage);
 };
@@ -60,29 +60,18 @@ function SetupUpdateEvents(curiosity) {
       curiosity[curiosityKeyToUpdate] = event.target.value;  
     }
 
-    const {inputCanvas, outputCanvas} = document.getElementById('switch').checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
-
-    inputDiv.appendChild(inputCanvas);
-    outputDiv.appendChild(outputCanvas);
+    document.getElementById('switch').checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
   };
 
-  // change curiosity method
   const updateAfterSwitchChange = () => {
-    const {inputCanvas, outputCanvas} = document.getElementById('switch').checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
-
-    inputDiv.appendChild(inputCanvas);
-    outputDiv.appendChild(outputCanvas);
+    document.getElementById('switch').checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
+    const stateText = document.querySelector(".state");
+    document.getElementById('switch').checked ? stateText.textContent = 'Reduced' : stateText.textContent = 'Reversed';
   }
-  // =============
-
-  const inputDiv = document.getElementById('input-display');
-  const outputDiv = document.getElementById('output-display');
   
   const sliders = document.querySelectorAll('.slider');
   sliders.forEach(slider => slider.addEventListener('input', updateAfterSliderChange));
   
-  const radio = document.getElementById('switch');
-  radio.addEventListener('input', updateAfterSwitchChange);
+  const toggleSwitch = document.getElementById('switch');
+  toggleSwitch.addEventListener('input', updateAfterSwitchChange);
 }
-
-// ========================================================
