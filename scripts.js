@@ -1,7 +1,7 @@
 import loadImage from "blueimp-load-image";
 import todaysCuriosity from './todays-curiosity';
 import george from './george.jpg';
-
+import footer from "./footer";
 
 // Check for the various File API support.
 if (window.File && window.FileReader && window.FileList && window.Blob) {

@@ -123,3 +123,8 @@ input:checked + .switch-slider:before {
 }
 
 /* ===================================================*/
+
+.avatar-img {
+  height: 40px;
+  width: 40px;
+}

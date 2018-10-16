@@ -46,8 +46,7 @@ request.onload = function() {
     avatarLink.setAttribute("href", contributor.html_url);
     const avatarImg = document.createElement("img");
     avatarImg.setAttribute("src", contributor.avatar_url);
-    avatarImg.setAttribute("height", "40px");
-    avatarImg.setAttribute("width", "40px");
+    avatarImg.classList.add("avatar-img");
 
     avatarLink.append(avatarImg);
 
