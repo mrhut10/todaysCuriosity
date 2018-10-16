@@ -2,8 +2,19 @@ const repo = "todaysCuriosity";
 const owner = "mrhut10";
 const requestURL =
   "https://api.github.com/repos/" + owner + "/" + repo + "/contributors";
-
 const contributors = [];
+
+// Adds spacing string between contributor
+function contributorSpacing(arrayLength, index) {
+  if (arrayLength - 2 === index) {
+    return " and ";
+  } else if (arrayLength - 2 >= index) {
+    return ", ";
+  }
+  else {
+    return "";
+  }
+}
 
 const request = new XMLHttpRequest();
 request.open("GET", requestURL);
@@ -20,43 +31,22 @@ request.onload = function() {
     });
   });
 
-  const footerText = document.createElement("p");
-  footerText.append("A project by ");
-
-  const footerAvatar = document.createElement("p");
+  let contributorEl = `<span>A project by...</span>`;
+  contributorEl += `<ul class='footer-list'>`;
 
   contributors.forEach((contributor, index) => {
-    // footer text
-    const contributorElement = document.createElement("a");
-    contributorElement.append(
-      contributor.login + "(" + contributor.contributions + ")"
-    );
-    contributorElement.setAttribute("href", contributor.html_url);
-
-    footerText.appendChild(contributorElement);
-
-    if (contributors.length - 2 === index) {
-      footerText.append(" and ");
-    } else if (contributors.length - 2 >= index) {
-      footerText.append(", ");
-    }
-
-    // footer avatar
-    const avatarLink = document.createElement("a");
-    avatarLink.setAttribute("href", contributor.html_url);
-    const avatarImg = document.createElement("img");
-    avatarImg.setAttribute("src", contributor.avatar_url);
-    avatarImg.classList.add("avatar-img");
-
-    avatarLink.append(avatarImg);
-
-    footerAvatar.append(avatarLink);
+    contributorEl += `
+      <li>
+          <a href="${contributor.html_url}">
+            <img src="${contributor.avatar_url}" class='avatar-img'>
+            <span>${contributor.login} (${contributor.contributions})</span>
+          </a>
+          <span>${contributorSpacing(contributors.length, index)}</span>
+      <li>
+    `
   });
 
-  footerText.append(".");
+  contributorEl += `</ul>`;
 
-  const footer = document.querySelector("#footer");
-
-  footer.append(footerAvatar);
-  footer.append(footerText);
+  document.querySelector("#footer").innerHTML = contributorEl;
 };

@@ -124,7 +124,12 @@ input:checked + .switch-slider:before {
 
 /* ===================================================*/
 
-.avatar-img {
+/* ================== footer styling =================*/
+ul.footer-list img{
   height: 40px;
   width: 40px;
+}
+
+ul.footer-list li {
+  display:inline;
 }
