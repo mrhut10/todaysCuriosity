@@ -122,4 +122,17 @@ input:checked + .switch-slider:before {
   margin: 0 1rem;
 }
 
+.block-input-file {
+  margin: 5px 0
+}
+
+.block-input-url {
+  margin: 5px 0 10px 0;
+}
+
+#file-url-error {
+  color: red;
+  display: none;
+}
+
 /* ===================================================*/
