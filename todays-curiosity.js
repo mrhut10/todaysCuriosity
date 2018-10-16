@@ -58,6 +58,7 @@ class todaysCuriosity {
     this.inputContext.putImageData(this.brightPixels, 0, 0, indexX, indexY, blockWidth, blockHeight)
     //draw new image block of pixels
     this.outputContext.drawImage(this.baseImage, indexX, indexY, blockWidth, blockHeight, dx, dy, blockWidth+2, blockHeight+2);
+    this.outputCanvas.style.transform="scale(1,1)";
   }
 
   getReversedPixelBlocks(){

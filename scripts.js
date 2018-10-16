@@ -2,6 +2,7 @@ import loadImage from "blueimp-load-image";
 import todaysCuriosity from './todays-curiosity';
 import george from './george.jpg';
 
+
 // Check for the various File API support.
 if (window.File && window.FileReader && window.FileList && window.Blob) {
   // alert('file api works')
@@ -13,7 +14,7 @@ let curiosity;
 
 const defaultImage = new Image();
 defaultImage.src = george;
-defaultImage.onload = function() {
+defaultImage.onload = () => {
   curiosity = new todaysCuriosity(defaultImage);
   imageSetup(defaultImage);
 };
@@ -34,10 +35,7 @@ function imageSetup (img) {
   curiosity.paintInputImage();
   curiosity.createBrightpixels();
 
-  // const {inputCanvas, outputCanvas} = curiosity.getReducedPixelBlocks();
-  // const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
-
-  const {inputCanvas, outputCanvas} = document.getElementsByClassName('method-type')[0].checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
+  const {inputCanvas, outputCanvas} = document.getElementById('switch').checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
 
   const inputDiv = document.getElementById('input-display');
   inputDiv.appendChild(inputCanvas);
@@ -50,7 +48,8 @@ function imageSetup (img) {
 function SetupUpdateEvents(curiosity) {
   const updateAfterSliderChange = (event) => {
     const sliderOutputToBeUpdated = document.getElementById(`${event.target.id}-output`);
-    sliderOutputToBeUpdated.value = event.target.value;
+    sliderOutputToBeUpdated.value = event.target.value; 
+    
 
     const curiosityKeyToUpdate = event.target.dataset.key;
     const percentageKeys = ['reductionRatio', 'xOffset', 'yOffset'];
@@ -60,29 +59,19 @@ function SetupUpdateEvents(curiosity) {
     } else {
       curiosity[curiosityKeyToUpdate] = event.target.value;  
     }
-  
-    // const {inputCanvas, outputCanvas} = curiosity.getReversedPixelBlocks();
 
-    const {inputCanvas, outputCanvas} = document.getElementsByClassName('method-type')[0].checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
-
-    inputDiv.appendChild(inputCanvas);
-    outputDiv.appendChild(outputCanvas);
+    document.getElementById('switch').checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
   };
 
-  const updateAfterRadioChange = (event) => {
-    const {inputCanvas, outputCanvas} = document.getElementsByClassName('method-type')[0].checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
-
-    inputDiv.appendChild(inputCanvas);
-    outputDiv.appendChild(outputCanvas);
-  };
-
-  const inputDiv = document.getElementById('input-display');
-  const outputDiv = document.getElementById('output-display');
+  const updateAfterSwitchChange = () => {
+    document.getElementById('switch').checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
+    const stateText = document.querySelector(".state");
+    document.getElementById('switch').checked ? stateText.textContent = 'Reduced' : stateText.textContent = 'Reversed';
+  }
   
   const sliders = document.querySelectorAll('.slider');
   sliders.forEach(slider => slider.addEventListener('input', updateAfterSliderChange));
-
-  const radios = document.querySelectorAll('input[type=radio]');
-  radios.forEach(radio => radio.addEventListener('input', updateAfterRadioChange));
+  
+  const toggleSwitch = document.getElementById('switch');
+  toggleSwitch.addEventListener('input', updateAfterSwitchChange);
 }
-
