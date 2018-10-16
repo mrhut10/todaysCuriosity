@@ -23,6 +23,10 @@ body {
   padding: 10px;
 }
 
+#smallScreen {
+  display: none;
+}
+
 #settings {
   box-sizing: border-box;
   grid-area: settings;
@@ -123,3 +127,38 @@ input:checked + .switch-slider:before {
 }
 
 /* ===================================================*/
+@media screen and (max-width: 900px) {
+  #defaultScreen {
+    display: none;
+  }
+  #smallScreen {
+    display: block;
+    text-align: center;
+  }
+  #smallScreen input[type="button"] {
+    border: 2px solid #000;
+    background: transparent;
+    max-width: 40px;
+    padding: 7px 15px 7px 15px;
+    margin: 0 15px;
+    outline: none;
+    cursor: pointer;
+  }
+  .smallScreen-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px auto;
+  }
+  .smallScreen-inner .value {
+    border: 2px solid #000;
+    background: transparent;
+    text-align: center;
+    max-width: 40px;
+    padding: 7px;
+  }
+  .smallScreen-inner label {
+    max-width: 33px;
+    display: block;
+  }
+}

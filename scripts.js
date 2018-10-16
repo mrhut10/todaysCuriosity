@@ -63,6 +63,34 @@ function SetupUpdateEvents(curiosity) {
     document.getElementById('switch').checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
   };
 
+  const updateAfterButtonPress = (event) => {
+    // Get input value
+    let el = event.target.parentNode.children[2];
+    if (event.target.value === '+') {
+      // min max
+      if (Number(el.value) < Number(el.max) && Number(el.value) >= Number(el.min)) {
+        event.target.parentNode.children[2].value++
+      }
+    } else {
+      // min max
+      if (Number(el.value) <= Number(el.max) && Number(el.value) > Number(el.min)) {
+        event.target.parentNode.children[2].value--
+      }
+    }
+
+    // Pixel functionallity
+    const curiosityKeyToUpdate = el.dataset.key;
+    const percentageKeys = ['reductionRatio', 'xOffset', 'yOffset'];
+
+    if (percentageKeys.includes(curiosityKeyToUpdate)) {
+      curiosity[curiosityKeyToUpdate] = el.value / 100;  
+    } else {
+      curiosity[curiosityKeyToUpdate] = el.value;  
+    }
+
+    document.getElementById('switch').checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
+  }
+
   const updateAfterSwitchChange = () => {
     document.getElementById('switch').checked ? curiosity.getReducedPixelBlocks() : curiosity.getReversedPixelBlocks();
     const stateText = document.querySelector(".state");
@@ -70,7 +98,15 @@ function SetupUpdateEvents(curiosity) {
   }
   
   const sliders = document.querySelectorAll('.slider');
-  sliders.forEach(slider => slider.addEventListener('input', updateAfterSliderChange));
+  const counters = document.querySelectorAll('input[type="button"]');
+  
+  if (window.innerWidth > 900) {
+    // If desktop
+    sliders.forEach(slider => slider.addEventListener('input', updateAfterSliderChange));
+  } else {
+    // If mobile (width < 900)
+    counters.forEach(el => el.addEventListener('click', updateAfterButtonPress));
+  }
   
   const toggleSwitch = document.getElementById('switch');
   toggleSwitch.addEventListener('input', updateAfterSwitchChange);
