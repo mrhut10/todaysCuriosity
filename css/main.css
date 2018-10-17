@@ -122,14 +122,24 @@ input:checked + .switch-slider:before {
   margin: 0 1rem;
 }
 
-/* ===================================================*/
-
-/* ================== footer styling =================*/
 ul.footer-list img{
   height: 40px;
   width: 40px;
+  display: block;
+  margin: 0 auto;
+}
+
+ul.footer-list {
+  width: 60%;
+  margin: 10px auto ;
 }
 
 ul.footer-list li {
-  display:inline;
+  display: inline-block;
+  padding: 0 20px;
+  border-left: 3px solid #333;
+}
+
+ul.footer-list li:first-child {
+  border-left: 0px solid #333;
 }

@@ -1,52 +1,60 @@
-const repo = "todaysCuriosity";
-const owner = "mrhut10";
-const requestURL =
-  "https://api.github.com/repos/" + owner + "/" + repo + "/contributors";
-const contributors = [];
+import * as idb from 'idb-keyval';
 
-// Adds spacing string between contributor
-function contributorSpacing(arrayLength, index) {
-  if (arrayLength - 2 === index) {
-    return " and ";
-  } else if (arrayLength - 2 >= index) {
-    return ", ";
+async function fetchGithubContributors(requestURL) {
+  let response;
+  if ('caches' in window) {
+    response = await caches.match(requestURL);
+    if (!response) {
+      response = await fetch(requestURL);
+      const cache = await caches.open(requestURL);
+      await cache.put(requestURL, response.clone());
+    }
+  } else {
+    // browser does not support the cache APi
+    response = await fetch(requestURL);
   }
-  else {
-    return "";
-  }
+
+  response = await fetch(requestURL);
+  const contributors = await response.json();
+  return contributors;
 }
 
-const request = new XMLHttpRequest();
-request.open("GET", requestURL);
-request.responseType = "json";
-request.send();
+function createContributorsHtml(contributors) {
+  const contributorListElements = contributors.map((contributor)=>{
+    return `
+    <li>
+      <a href="${contributor.html_url}">
+        <img src="${contributor.avatar_url}" class='avatar-img'>
+        <div>${contributor.login}</div>
+      </a>
+    </li>
+    `;
+  }).join('');
+  return `
+  <span>A project by...</span>
+  <ul class='footer-list'>
+    ${contributorListElements}
+  </ul>
+  `;
+}
 
-request.onload = function() {
-  request.response.forEach(contributor => {
-    contributors.push({
-      avatar_url: contributor.avatar_url,
-      login: contributor.login,
-      html_url: contributor.html_url,
-      contributions: contributor.contributions
-    });
-  });
+async function getContributorsHTML() {
+  const repo = "todaysCuriosity";
+  const owner = "mrhut10";
+  const requestURL = `https://api.github.com/repos/${owner}/${repo}/contributors`;
+  let contributorsHtml;
 
-  let contributorEl = `<span>A project by...</span>`;
-  contributorEl += `<ul class='footer-list'>`;
+  const lastContributors = await idb.get('LastGithubResponse');
+  if (lastContributors) {
+    contributorsHtml = createContributorsHtml(lastContributors);
+  } else {
+    const contributors = await fetchGithubContributors(requestURL);
+    contributorsHtml = createContributorsHtml(contributors);
+    idb.set('LastGithubResponse', contributors);
+  }
+  return contributorsHtml;
+}
 
-  contributors.forEach((contributor, index) => {
-    contributorEl += `
-      <li>
-          <a href="${contributor.html_url}">
-            <img src="${contributor.avatar_url}" class='avatar-img'>
-            <span>${contributor.login} (${contributor.contributions})</span>
-          </a>
-          <span>${contributorSpacing(contributors.length, index)}</span>
-      <li>
-    `
-  });
+export default getContributorsHTML;
 
-  contributorEl += `</ul>`;
-
-  document.querySelector("#footer").innerHTML = contributorEl;
-};
+// getContributorsHTML();

@@ -1,7 +1,8 @@
+import 'babel-polyfill';
 import loadImage from "blueimp-load-image";
 import todaysCuriosity from './todays-curiosity';
 import george from './george.jpg';
-import footer from "./footer";
+import getContributorsHTML from './footer';
 
 // Check for the various File API support.
 if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -21,9 +22,9 @@ defaultImage.onload = () => {
 
 document.getElementById('file-input').onchange = function (e) {
   loadImage(
-      e.target.files[0],
-      imageSetup,
-      {maxWidth: 2000} // Options
+    e.target.files[0],
+    imageSetup,
+    {maxWidth: 2000} // Options
   );
 };
 
@@ -75,3 +76,7 @@ function SetupUpdateEvents(curiosity) {
   const toggleSwitch = document.getElementById('switch');
   toggleSwitch.addEventListener('input', updateAfterSwitchChange);
 }
+
+getContributorsHTML().then(
+  contributorsHtml => document.querySelector("#footer").innerHTML = contributorsHtml
+);
