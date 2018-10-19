@@ -39,7 +39,24 @@ document.getElementById('get-url').onclick = async function (e) {
   document.getElementById('file-url-error').style.display = "none";
   if(blob.type.substr(0, 5) !== 'image') {
     document.getElementById('file-url-error').style.display = "block";
+<<<<<<< HEAD
     return;
+=======
+  } else {
+    fetch(fileUrl)
+    .then(response => response.blob())
+    .then(blob => {
+      loadImage(
+        blob,
+        imageSetup,
+        {maxWidth: 2000} // Options
+      );
+    })
+    .catch(error => {
+      console.log('Error fetching image: ', error)
+      alert('Error fetching image, please try again')
+    })
+>>>>>>> 7c7df74adc0702f3fdcdedb5ac2db34a3dc5ac38
   }
 
   loadImage(
@@ -52,6 +69,13 @@ document.getElementById('get-url').onclick = async function (e) {
 // Initial sliders output value
 document.querySelectorAll('.slider').forEach(slider => document.getElementById(`${slider.id}-output`).value = slider.value)
 
+<<<<<<< HEAD
+=======
+function domainValid (url) {
+  return /^((http|https):\/\/)?(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|([a-zA-Z0-9][a-zA-Z0-9-_]{1,61}[a-zA-Z0-9]))\.([a-zA-Z]{2,6}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z]{2,3})/gm.test(url)
+}
+
+>>>>>>> 7c7df74adc0702f3fdcdedb5ac2db34a3dc5ac38
 function imageSetup (img) {
   curiosity.baseImage = img;
   curiosity.paintInputImage();
@@ -72,6 +96,7 @@ function SetupUpdateEvents(curiosity) {
     const sliderOutputToBeUpdated = document.getElementById(`${event.target.id}-output`);
     sliderOutputToBeUpdated.value = event.target.value; 
     
+
     const curiosityKeyToUpdate = event.target.dataset.key;
     const percentageKeys = ['reductionRatio', 'xOffset', 'yOffset'];
 
