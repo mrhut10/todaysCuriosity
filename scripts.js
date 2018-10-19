@@ -46,19 +46,21 @@ document.getElementById('get-url').onclick = function (e) {
         {maxWidth: 2000} // Options
       );
     })
+    .catch(error => {
+      console.log('Error fetching image: ', error)
+      alert('Error fetching image, please try again')
+    })
   }
 }
 
 // Initial sliders output value
 document.querySelectorAll('.slider').forEach(slider => document.getElementById(`${slider.id}-output`).value = slider.value)
 
-// Valid if url is valid
 function domainValid (url) {
   return /^((http|https):\/\/)?(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|([a-zA-Z0-9][a-zA-Z0-9-_]{1,61}[a-zA-Z0-9]))\.([a-zA-Z]{2,6}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z]{2,3})/gm.test(url)
 }
 
 function imageSetup (img) {
-  console.log(img)
   curiosity.baseImage = img;
   curiosity.paintInputImage();
   curiosity.createBrightpixels();
@@ -78,6 +80,7 @@ function SetupUpdateEvents(curiosity) {
     const sliderOutputToBeUpdated = document.getElementById(`${event.target.id}-output`);
     sliderOutputToBeUpdated.value = event.target.value; 
     
+
     const curiosityKeyToUpdate = event.target.dataset.key;
     const percentageKeys = ['reductionRatio', 'xOffset', 'yOffset'];
 
