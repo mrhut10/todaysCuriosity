@@ -28,6 +28,31 @@ document.getElementById('file-input').onchange = function (e) {
   );
 };
 
+document.getElementById('get-url').onclick = async function (e) {
+  e.preventDefault();
+  const fileUrl = document.getElementById('file-url').value;
+  document.getElementById('file-url-error').style.display = "block";
+  let blob;
+  try {
+    const response = await fetch(fileUrl);
+    blob = await response.blob();
+  } catch (error) {
+    console.log(error);
+  }
+
+  document.getElementById('file-url-error').style.display = "none";
+  if(blob.type.substr(0, 5) !== 'image') {
+    document.getElementById('file-url-error').style.display = "block";
+    return;
+  }
+
+  loadImage(
+    blob,
+    imageSetup,
+    {maxWidth: 2000} // Options
+  );
+}
+
 // Initial sliders output value
 document.querySelectorAll('.slider').forEach(slider => document.getElementById(`${slider.id}-output`).value = slider.value)
 

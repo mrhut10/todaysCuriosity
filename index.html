@@ -14,7 +14,15 @@
       <div id="settings">
         <form>
           <div id="input-display"></div>
-          <input type="file" id="file-input" name="file[]" id=""/>
+          <div class="block-input-file">
+            <input type="file" id="file-input" name="file[]"/>
+          </div>
+
+          <div class="block-input-url">
+            <input type="text" id="file-url" name="url">
+            <button id="get-url">></button>
+            <span id="file-url-error">Problem loading file</span>
+          </div>
 
           <div class="method-change">
             <p class="state">Reduced</p>
