@@ -28,37 +28,31 @@ document.getElementById('file-input').onchange = function (e) {
   );
 };
 
-document.getElementById('get-url').onclick = function (e) {
+document.getElementById('get-url').onclick = async function (e) {
   e.preventDefault();
   const fileUrl = document.getElementById('file-url').value;
-  document.getElementById('file-url-error').style.display = "none";
+  document.getElementById('file-url-error').style.display = "block";
+  
+  const response = await fetch(fileUrl);
+  const blob = await response.blob();
 
-  // Check if url is valid
-  if (!domainValid(fileUrl)) {
+  document.getElementById('file-url-error').style.display = "none";
+  if(blob.type.substr(0, 5) !== 'image') {
     document.getElementById('file-url-error').style.display = "block";
-  } else {
-    fetch(fileUrl)
-    .then(response => response.blob())
-    .then(blob => {
-      loadImage(
-        blob,
-        imageSetup,
-        {maxWidth: 2000} // Options
-      );
-    })
+    return;
   }
+
+  loadImage(
+    blob,
+    imageSetup,
+    {maxWidth: 2000} // Options
+  );
 }
 
 // Initial sliders output value
 document.querySelectorAll('.slider').forEach(slider => document.getElementById(`${slider.id}-output`).value = slider.value)
 
-// Valid if url is valid
-function domainValid (url) {
-  return /^((http|https):\/\/)?(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|([a-zA-Z0-9][a-zA-Z0-9-_]{1,61}[a-zA-Z0-9]))\.([a-zA-Z]{2,6}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z]{2,3})/gm.test(url)
-}
-
 function imageSetup (img) {
-  console.log(img)
   curiosity.baseImage = img;
   curiosity.paintInputImage();
   curiosity.createBrightpixels();
