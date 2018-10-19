@@ -32,9 +32,13 @@ document.getElementById('get-url').onclick = async function (e) {
   e.preventDefault();
   const fileUrl = document.getElementById('file-url').value;
   document.getElementById('file-url-error').style.display = "block";
-  
-  const response = await fetch(fileUrl);
-  const blob = await response.blob();
+  let blob;
+  try {
+    const response = await fetch(fileUrl);
+    blob = await response.blob();
+  } catch (error) {
+    console.log(error);
+  }
 
   document.getElementById('file-url-error').style.display = "none";
   if(blob.type.substr(0, 5) !== 'image') {
