@@ -25,8 +25,9 @@ body {
 
 #input-display {
   grid-area: input;
-  overflow: hidden;
   padding: 10px;
+  overflow: hidden;
+  max-height: 80vh;
 }
 
 #input-display canvas {
@@ -41,10 +42,6 @@ input[type="file"] {
 input[type="text"] {
   margin: 10px 0;
   width: 100%;
-}
-
-fieldset {
-  margin: 10px 0px;
 }
 
 #settings {
