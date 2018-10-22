@@ -48,9 +48,6 @@ input[type="text"] {
   grid-area: settings;
   box-sizing: border-box;
   padding: 10px;
-  overflow: scroll;
-  height: 20vh; 
-  min-height: 10rem;
   margin: 10px;
   border: 2px solid gray;
 }
@@ -175,4 +172,12 @@ ul.footer-list li {
 
 ul.footer-list li:first-child {
   border-left: 0px solid #333;
+}
+
+
+@media screen and (min-width: 600px) {
+  #main {
+    grid-template-areas:
+      "input output settings";
+  }
 }
