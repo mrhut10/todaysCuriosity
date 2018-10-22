@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Play with pixels</title>
   <link rel="stylesheet" href="./css/main.css">
 </head>
+
 <body>
   <div id="wrapper">
     <header id="header">
       <h1>todays curiosity</h1>
     </header>
     <section id="main">
+      <div id="input-display"></div>
       <div id="settings">
         <form>
-          <div id="input-display"></div>
           <div class="block-input-file">
-            <input type="file" id="file-input" name="file[]"/>
+            <input type="file" id="file-input" name="file[]" />
           </div>
 
           <div class="block-input-url">
@@ -31,26 +33,26 @@
               <span class="switch-slider"></span>
             </label>
           </div>
-          
+
           <output name="fileoutput"></output>
           <div id="slider-container">
             <label for="x-divisions">x div:</label>
-            <output name="x-divisionsOutput" id="x-divisions-output" value="15" class="slider-output" ></output>
+            <output name="x-divisionsOutput" id="x-divisions-output" value="15" class="slider-output"></output>
             <input type="range" min="5" max="100" value="15" class="slider" id="x-divisions" data-key="xDivisions">
             <label for="y-divisions">y div:</label>
             <output name="y-divisionsOutput" id="y-divisions-output" value="15" class="slider-output"></output>
-            <input type="range" min="5" max="80"  value="15" class="slider" id="y-divisions" data-key="yDivisions">
+            <input type="range" min="5" max="80" value="15" class="slider" id="y-divisions" data-key="yDivisions">
             <label for="ratio">ratio:</label>
             <output name="ratio" id="ratio-output" value="50" class="slider-output"></output>
-            <input type="range" min="0" max="100"  value="50" class="slider" id="ratio" data-key="reductionRatio">
+            <input type="range" min="0" max="100" value="50" class="slider" id="ratio" data-key="reductionRatio">
             <label for="x-offset">x offset:</label>
             <output name="x-offset" id="x-offset-output" value="1" class="slider-output"></output>
-            <input type="range" min="0" max="100"  value="1" class="slider" id="x-offset" data-key="xOffset">
+            <input type="range" min="0" max="100" value="1" class="slider" id="x-offset" data-key="xOffset">
             <label for="y-offset">y offset:</label>
             <output name="y-offset" id="y-offset-output" value="1" class="slider-output"></output>
-            <input type="range" min="0" max="100"  value="1" class="slider" id="y-offset" data-key="yOffset">
+            <input type="range" min="0" max="100" value="1" class="slider" id="y-offset" data-key="yOffset">
           </div>
-        </form>          
+        </form>
       </div>
       <div id="output-display">
         <!--output image will get injected here-->
@@ -61,4 +63,5 @@
   </div>
   <script src="scripts.js"></script>
 </body>
+
 </html>
