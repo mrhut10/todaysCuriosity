@@ -70,6 +70,8 @@ input[type="text"] {
 #output-display {
   grid-area: output;
   padding: 10px;
+  background: dimgray;
+  
 }
 #output-display canvas {
   width: 100%;
