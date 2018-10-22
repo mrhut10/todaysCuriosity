@@ -153,25 +153,30 @@ input:checked + .switch-slider:before {
 }
 
 ul.footer-list {
-  width: 60%;
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
+  justify-content: center;
   margin: 10px auto ;
 }
 
-ul.footer-list li {
-  display: inline-block;
-  padding: 0 20px;
-  border-left: 3px solid #333;
+#footer {
+  padding: 10px;
 }
-
-ul.footer-list li:first-child {
-  border-left: 0px solid #333;
+ul.footer-list {
+  padding: 0px;
+  width: calc(100% - 20px);
+}
+ul.footer-list li {
+  margin: 10px;
+  list-style: none;
 }
 
 ul.footer-list img{
   height: 40px;
   width: 40px;
-  display: block;
   margin: 0 auto;
+  display: block;
 }
 
 
