@@ -48,7 +48,14 @@ input[type="text"] {
   grid-area: settings;
   box-sizing: border-box;
   padding: 10px;
-  overflow: hidden;
+}
+#settings h2 {
+  width: calc(100% - 26px);
+  background: lightgray;
+  padding: 3px;
+  margin: 10px 4px;
+  text-align: center;
+  font-size: 1.3em;
 }
 
 #settings input[type=range] {
