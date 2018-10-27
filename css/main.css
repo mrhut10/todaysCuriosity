@@ -16,18 +16,48 @@ body {
 #main {
   display: grid;
   grid-template-areas: 
-    "settings" "output";
-  grid-template-columns: 2fr 3fr;
-  grid-template-rows: 1fr;
+    "input output"
+    "settings settings";
+  grid-template-columns: 1fr 3fr;
   background: white;
+  padding: 3px;
+}
+
+#input-display {
+  grid-area: input;
   padding: 10px;
+  overflow: hidden;
+  max-height: 80vh;
+}
+
+#input-display canvas {
+  width: 100%;
+}
+
+input[type="file"] {
+  margin: 10px auto;
+  width: 100%;
+}
+
+input[type="text"] {
+  margin: 10px 0;
+  width: 100%;
 }
 
 #settings {
-  box-sizing: border-box;
   grid-area: settings;
+  box-sizing: border-box;
   padding: 10px;
-  overflow: hidden;
+  margin: 10px;
+  border: 2px solid gray;
+}
+#settings h2 {
+  width: calc(100% - 26px);
+  background: lightgray;
+  padding: 3px;
+  margin: 10px 4px;
+  text-align: center;
+  font-size: 1.3em;
 }
 
 #settings input[type=range] {
@@ -37,26 +67,15 @@ body {
   font-size: 1.3em;
 }
 
-#input-display canvas {
-  width: 100%;
-}
-
-input[type="file"] {
-  margin: 10px 0;
-}
-
-fieldset {
-  margin: 10px 0px;
-}
-
 #output-display {
+  grid-area: output;
   padding: 10px;
+  background: dimgray;
+  
 }
-
 #output-display canvas {
   width: 100%;
 }
-
 
 /* method change styles =================================*/
 .method-change{
@@ -135,24 +154,50 @@ input:checked + .switch-slider:before {
   display: none;
 }
 
-ul.footer-list img{
-  height: 40px;
-  width: 40px;
-  display: block;
-  margin: 0 auto;
+#footer {
+  padding: 10px;
 }
 
 ul.footer-list {
-  width: 60%;
   margin: 10px auto ;
+  padding: 0px;
+  width: calc(100% - 20px);
+  display: flex;
+  flex-flow: row wrap;
+  flex-basis: 80px;  
+  justify-content: center;
 }
 
 ul.footer-list li {
-  display: inline-block;
-  padding: 0 20px;
-  border-left: 3px solid #333;
+  margin: 10px;
+  display: block;
+  background: #eee;
+  list-style: none;
+  width:70px;
+  overflow: visible;
+  transition-property: all;
+  transition-duration: 1s;
+  transition-timing-function: ease;
 }
 
-ul.footer-list li:first-child {
-  border-left: 0px solid #333;
+ul.footer-list li:hover{
+  transform: scale(1.3) rotate(3deg);
+  
+}
+
+ul.footer-list img{
+  height: 40px;
+  width: 40px;
+  margin: 0 auto;
+  display: block;
+}
+
+@media screen and (min-width: 600px) {
+  #main {
+    grid-template-areas:
+      "input output settings";
+  }
+  #settings {
+    transform: skewY(-3deg);
+  }
 }
