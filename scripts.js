@@ -24,7 +24,7 @@ document.getElementById('file-input').onchange = function (e) {
   loadImage(
     e.target.files[0],
     imageSetup
-  ).scale(2000);
+  ).scale({maxWidth: 2000});
 };
 
 document.getElementById('get-url').onclick = async function (e) {
