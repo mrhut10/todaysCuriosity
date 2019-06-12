@@ -23,9 +23,8 @@ defaultImage.onload = () => {
 document.getElementById('file-input').onchange = function (e) {
   loadImage(
     e.target.files[0],
-    imageSetup,
-    {maxWidth: 2000} // Options
-  );
+    imageSetup
+  ).scale({maxWidth: 2000});
 };
 
 document.getElementById('get-url').onclick = async function (e) {
